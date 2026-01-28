@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+
+# Proxy API requests to avoid mixed content issues
+[[redirects]]
+  from = "/api/*"
+  to = "http://209.38.42.28:4402/:splat"
+  status = 200
+  force = true

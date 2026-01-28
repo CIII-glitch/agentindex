@@ -513,7 +513,7 @@
         // Fetch live stats from API
         async function updateStats() {
             try {
-                const res = await fetch('http://209.38.42.28:4402/stats');
+                const res = await fetch('/api/stats');
                 const data = await res.json();
                 if (data.totalEndpoints) {
                     document.getElementById('endpoints-count').textContent = data.totalEndpoints;
