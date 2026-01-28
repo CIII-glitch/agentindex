@@ -224,6 +224,105 @@
             </div>
         </div>
         
+        <div class="endpoint">
+            <div class="endpoint-header">
+                <span class="method method-get">GET</span>
+                <span class="path">/premium/recommend</span>
+                <span class="price-tag">$0.03</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="endpoint-desc">AI-powered endpoint recommendation. Describe what you need in plain language.</p>
+                <h3>Query Parameters</h3>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">need</span>
+                        <span class="param-type">string</span>
+                        <span class="param-desc">What you need (e.g., "real-time crypto prices") <span class="badge badge-required">required</span></span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">maxPrice</span>
+                        <span class="param-type">number</span>
+                        <span class="param-desc">Maximum price per call <span class="badge badge-optional">optional</span></span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">requireHealthy</span>
+                        <span class="param-type">boolean</span>
+                        <span class="param-desc">Only return healthy endpoints <span class="badge badge-optional">optional</span></span>
+                    </div>
+                </div>
+                <pre>GET /api/premium/recommend?need=I need real-time crypto prices&maxPrice=0.05</pre>
+            </div>
+        </div>
+        
+        <div class="endpoint">
+            <div class="endpoint-header">
+                <span class="method method-get">GET</span>
+                <span class="path">/premium/reputation</span>
+                <span class="price-tag">$0.02</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="endpoint-desc">Detailed reputation and reliability history for a specific endpoint.</p>
+                <h3>Query Parameters</h3>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">url</span>
+                        <span class="param-type">string</span>
+                        <span class="param-desc">Endpoint URL to check <span class="badge badge-required">required</span></span>
+                    </div>
+                </div>
+                <pre>{
+  "reputation": {
+    "overallScore": 87,
+    "uptimePercent": "99.2",
+    "avgResponseTime": 245,
+    "trend": "stable"
+  }
+}</pre>
+            </div>
+        </div>
+        
+        <div class="endpoint">
+            <div class="endpoint-header">
+                <span class="method method-get">GET</span>
+                <span class="path">/premium/leaders</span>
+                <span class="price-tag">$0.02</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="endpoint-desc">Get the top-rated endpoint in each category. One call to find the best across all categories.</p>
+                <pre>{
+  "leaders": {
+    "ai/ml": { "url": "...", "score": 95, "price": 0.02 },
+    "defi": { "url": "...", "score": 92, "price": 0.01 }
+  }
+}</pre>
+            </div>
+        </div>
+        
+        <div class="endpoint">
+            <div class="endpoint-header">
+                <span class="method method-get">GET</span>
+                <span class="path">/premium/budget</span>
+                <span class="price-tag">$0.01</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="endpoint-desc">Find highest quality endpoints within your budget. Optimizes quality-per-dollar.</p>
+                <h3>Query Parameters</h3>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">maxPricePerCall</span>
+                        <span class="param-type">number</span>
+                        <span class="param-desc">Maximum price per call <span class="badge badge-required">required</span></span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">category</span>
+                        <span class="param-type">string</span>
+                        <span class="param-desc">Filter by category <span class="badge badge-optional">optional</span></span>
+                    </div>
+                </div>
+                <pre>GET /api/premium/budget?maxPricePerCall=0.02&category=defi</pre>
+            </div>
+        </div>
+        
         <h2>Using x402 Payments</h2>
         <p>To call premium endpoints, use the <code>@x402/fetch</code> SDK:</p>
         <pre>import { wrapFetchWithPayment } from '@x402/fetch';
