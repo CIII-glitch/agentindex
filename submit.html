@@ -149,11 +149,21 @@
                 submitted: new Date().toISOString()
             };
             
-            // For now, log to console and show success (backend submission endpoint coming soon)
-            console.log('Submission:', data);
-            
-            // Simulate submission delay
-            await new Promise(r => setTimeout(r, 1000));
+            // Submit to backend
+            try {
+                const res = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (!result.success) throw new Error(result.error || 'Submission failed');
+            } catch (err) {
+                alert('Error: ' + err.message);
+                btn.disabled = false;
+                btn.textContent = 'Submit for Review';
+                return;
+            }
             
             // Show success
             form.style.display = 'none';
