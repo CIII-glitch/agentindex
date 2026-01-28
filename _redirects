@@ -1,1 +1,8 @@
-/search   /search.html   200
+# API proxy
+/api/*  http://209.38.42.28:4402/:splat  200
+
+# HTML pages (clean URLs)
+/search     /search.html        200
+/categories /categories.html    200
+/docs       /docs.html          200
+/submit     /submit.html        200

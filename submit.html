@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Your Service — Agent Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #0a0a0b; --surface: #141416; --border: #27272a; --text: #fafafa; --text-muted: #a1a1aa; --accent: #3b82f6; --accent-hover: #2563eb; --green: #22c55e; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 700px; margin: 0 auto; padding: 0 24px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        main { padding: 60px 0; }
+        h1 { font-size: 2.5rem; margin-bottom: 16px; }
+        .subtitle { color: var(--text-muted); margin-bottom: 48px; font-size: 1.1rem; }
+        .form-section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 24px; }
+        .form-section h2 { font-size: 1.2rem; margin-bottom: 24px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.95rem; }
+        .label-hint { font-weight: 400; color: var(--text-muted); font-size: 0.85rem; }
+        input, textarea, select { width: 100%; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 1rem; font-family: inherit; transition: border-color 0.2s; }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); }
+        textarea { min-height: 100px; resize: vertical; }
+        select { cursor: pointer; }
+        .checkbox-group { display: flex; align-items: center; gap: 12px; }
+        .checkbox-group input { width: auto; }
+        .info-box { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 16px; margin-bottom: 24px; }
+        .info-box h3 { font-size: 1rem; margin-bottom: 8px; color: var(--accent); }
+        .info-box p { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
+        .submit-btn { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 8px; color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .submit-btn:hover { background: var(--accent-hover); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .success-msg { background: rgba(34, 197, 94, 0.1); border: 1px solid var(--green); border-radius: 8px; padding: 20px; text-align: center; display: none; }
+        .success-msg h3 { color: var(--green); margin-bottom: 8px; }
+        footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 40px; }
+        @media (max-width: 768px) { .nav-links { display: none; } h1 { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo"><div class="logo-icon">🔍</div>Agent Index</a>
+            <nav class="nav-links">
+                <a href="/categories">Categories</a>
+                <a href="/docs">API Docs</a>
+                <a href="/submit" class="active">List Your Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1>List Your x402 Service</h1>
+        <p class="subtitle">Get discovered by AI agents worldwide. Free to list.</p>
+        
+        <div class="info-box">
+            <h3>📋 Requirements</h3>
+            <p>Your endpoint must support x402 payments (return 402 Payment Required with valid payment header). We'll automatically verify and index your service.</p>
+        </div>
+        
+        <form id="submitForm">
+            <div class="form-section">
+                <h2>Endpoint Details</h2>
+                
+                <div class="form-group">
+                    <label>Endpoint URL <span class="label-hint">(required)</span></label>
+                    <input type="url" name="url" placeholder="https://your-api.com/endpoint" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Description <span class="label-hint">(what does it do?)</span></label>
+                    <textarea name="description" placeholder="Describe what your endpoint does and what data it returns..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category">
+                        <option value="">Select a category</option>
+                        <option value="ai/ml">AI & Machine Learning</option>
+                        <option value="crypto-data">Crypto Data & Prices</option>
+                        <option value="defi">DeFi & Finance</option>
+                        <option value="news">News & Media</option>
+                        <option value="weather">Weather</option>
+                        <option value="web-data">Web Data & Scraping</option>
+                        <option value="social">Social & Sentiment</option>
+                        <option value="trading">Trading & Signals</option>
+                        <option value="identity">Identity & Reputation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Price per Call (USD)</label>
+                    <input type="number" name="price" step="0.001" min="0" placeholder="0.01">
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2>Contact (Optional)</h2>
+                
+                <div class="form-group">
+                    <label>Email <span class="label-hint">(for listing updates)</span></label>
+                    <input type="email" name="email" placeholder="you@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Twitter/X Handle</label>
+                    <input type="text" name="twitter" placeholder="@yourhandle">
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit for Review</button>
+        </form>
+        
+        <div class="success-msg" id="successMsg">
+            <h3>✅ Submission Received!</h3>
+            <p>We'll verify your endpoint and add it to the index within 24 hours. You'll be notified by email if provided.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Agent Index — The discovery layer for agent-to-agent commerce</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.getElementById('submitForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const btn = form.querySelector('button');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+            
+            // Collect form data
+            const data = {
+                url: form.url.value,
+                description: form.description.value,
+                category: form.category.value,
+                price: form.price.value,
+                email: form.email.value,
+                twitter: form.twitter.value,
+                submitted: new Date().toISOString()
+            };
+            
+            // For now, log to console and show success (backend submission endpoint coming soon)
+            console.log('Submission:', data);
+            
+            // Simulate submission delay
+            await new Promise(r => setTimeout(r, 1000));
+            
+            // Show success
+            form.style.display = 'none';
+            document.getElementById('successMsg').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

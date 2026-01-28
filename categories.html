@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories — Agent Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #0a0a0b; --surface: #141416; --border: #27272a; --text: #fafafa; --text-muted: #a1a1aa; --accent: #3b82f6; --accent-hover: #2563eb; --green: #22c55e; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        main { padding: 60px 0; }
+        h1 { font-size: 2.5rem; margin-bottom: 16px; }
+        .subtitle { color: var(--text-muted); margin-bottom: 48px; font-size: 1.1rem; }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .category-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; text-decoration: none; color: var(--text); transition: all 0.2s; }
+        .category-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .category-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+        .category-icon { font-size: 2.5rem; }
+        .category-name { font-size: 1.25rem; font-weight: 600; }
+        .category-count { color: var(--green); font-size: 0.9rem; font-weight: 500; }
+        .category-desc { color: var(--text-muted); font-size: 0.9rem; }
+        footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 60px; }
+        footer a { color: var(--text-muted); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        @media (max-width: 768px) { .nav-links { display: none; } h1 { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="/" class="logo"><div class="logo-icon">🔍</div>Agent Index</a>
+            <nav class="nav-links">
+                <a href="/categories" class="active">Categories</a>
+                <a href="/docs">API Docs</a>
+                <a href="/submit">List Your Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1>Browse Categories</h1>
+        <p class="subtitle">Explore x402 endpoints organized by use case</p>
+        <div class="category-grid" id="categories"></div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Agent Index — The discovery layer for agent-to-agent commerce</p>
+        </div>
+    </footer>
+    
+    <script>
+        const CATEGORY_META = {
+            'ai/ml': { icon: '🤖', desc: 'Machine learning models, AI inference, LLM APIs' },
+            'crypto-data': { icon: '💰', desc: 'Token prices, market data, blockchain analytics' },
+            'defi': { icon: '🏦', desc: 'DeFi protocols, yields, liquidity data' },
+            'weather': { icon: '🌤️', desc: 'Weather forecasts, climate data, alerts' },
+            'news': { icon: '📰', desc: 'News feeds, summaries, media monitoring' },
+            'web-data': { icon: '🌐', desc: 'Web scraping, search, content extraction' },
+            'content/ipfs': { icon: '📦', desc: 'IPFS content, decentralized storage' },
+            'social': { icon: '💬', desc: 'Social media data, sentiment analysis' },
+            'trading': { icon: '📈', desc: 'Trading signals, market analysis' },
+            'identity': { icon: '🪪', desc: 'Identity verification, reputation scores' },
+            'other': { icon: '📊', desc: 'Miscellaneous services and utilities' }
+        };
+
+        async function loadCategories() {
+            try {
+                const res = await fetch('/api/categories');
+                const data = await res.json();
+                const grid = document.getElementById('categories');
+                const sorted = Object.entries(data.categories).sort((a, b) => b[1] - a[1]);
+                grid.innerHTML = sorted.map(([cat, count]) => {
+                    const meta = CATEGORY_META[cat] || { icon: '🔌', desc: 'Various endpoints' };
+                    const displayName = cat.replace(/[/-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                    return `
+                        <a href="/search?category=${encodeURIComponent(cat)}" class="category-card">
+                            <div class="category-header">
+                                <span class="category-icon">${meta.icon}</span>
+                                <div>
+                                    <div class="category-name">${displayName}</div>
+                                    <div class="category-count">${count} endpoints</div>
+                                </div>
+                            </div>
+                            <p class="category-desc">${meta.desc}</p>
+                        </a>
+                    `;
+                }).join('');
+            } catch (e) { document.getElementById('categories').innerHTML = '<p>Error loading categories</p>'; }
+        }
+        loadCategories();
+    </script>
+</body>
+</html>
