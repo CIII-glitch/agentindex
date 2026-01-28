@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search — Agent Index</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --border: #27272a;
+            --text: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --green: #22c55e;
+            --yellow: #eab308;
+            --red: #ef4444;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+        
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .search-box {
+            flex: 1;
+            max-width: 500px;
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .search-box:focus-within { border-color: var(--accent); }
+        
+        .search-box input {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+        }
+        
+        .search-box button {
+            padding: 12px 20px;
+            background: var(--accent);
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .search-box button:hover { background: var(--accent-hover); }
+        
+        main { padding: 32px 0; }
+        
+        .search-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .filter-btn {
+            padding: 6px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+        
+        .results { display: grid; gap: 12px; }
+        
+        .result-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: border-color 0.2s;
+        }
+        
+        .result-card:hover { border-color: var(--accent); }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .result-title {
+            font-size: 1rem;
+            font-weight: 600;
+            word-break: break-word;
+        }
+        
+        .result-domain {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        
+        .result-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .result-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+        
+        .price { color: var(--green); font-weight: 600; }
+        
+        .health-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .health-healthy { background: var(--green); }
+        .health-degraded { background: var(--yellow); }
+        .health-unhealthy, .health-unknown { background: var(--red); }
+        
+        .tier {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .tier-A { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+        .tier-B { background: rgba(59, 130, 246, 0.2); color: var(--accent); }
+        .tier-C { background: rgba(234, 179, 8, 0.2); color: var(--yellow); }
+        .tier-D { background: rgba(239, 68, 68, 0.2); color: var(--red); }
+        
+        .category {
+            padding: 2px 8px;
+            background: var(--border);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .try-btn {
+            margin-left: auto;
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .try-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .loading, .no-results, .error {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+        
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        
+        @media (max-width: 640px) {
+            .header-content { flex-wrap: wrap; }
+            .search-box { max-width: 100%; order: 3; width: 100%; margin-top: 16px; }
+            .result-header { flex-direction: column; }
+            .result-meta { gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">🔍</div>
+                Agent Index
+            </a>
+            <form class="search-box" id="searchForm">
+                <input type="text" name="q" id="searchInput" placeholder="Search endpoints..." autocomplete="off">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="search-info">
+            <span id="resultCount">Searching...</span>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="healthy">Healthy Only</button>
+                <button class="filter-btn" data-filter="tier-a">Tier A</button>
+            </div>
+        </div>
+        
+        <div class="results" id="results">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Searching endpoints...</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Agent Index — The discovery layer for agent-to-agent commerce</p>
+        </div>
+    </footer>
+    
+    <script>
+        const API_BASE = 'http://209.38.42.28:4402';
+        let allResults = [];
+        let currentFilter = 'all';
+        
+        // Get query from URL
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get('q') || '';
+        document.getElementById('searchInput').value = query;
+        
+        // Search on load
+        if (query) {
+            search(query);
+        } else {
+            // Show all endpoints if no query
+            search('');
+        }
+        
+        // Search form handler
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const q = document.getElementById('searchInput').value;
+            window.history.pushState({}, '', `?q=${encodeURIComponent(q)}`);
+            search(q);
+        });
+        
+        // Filter handlers
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderResults();
+            });
+        });
+        
+        async function search(q) {
+            const resultsEl = document.getElementById('results');
+            resultsEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Searching endpoints...</p></div>';
+            
+            try {
+                const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(q)}`);
+                const data = await res.json();
+                allResults = data.results || [];
+                renderResults();
+            } catch (err) {
+                resultsEl.innerHTML = `<div class="error"><p>Error connecting to API</p><p style="font-size:0.85rem;margin-top:8px;">${err.message}</p></div>`;
+                document.getElementById('resultCount').textContent = 'Error';
+            }
+        }
+        
+        function renderResults() {
+            const resultsEl = document.getElementById('results');
+            
+            let filtered = allResults;
+            if (currentFilter === 'healthy') {
+                filtered = allResults.filter(r => r.health === 'healthy');
+            } else if (currentFilter === 'tier-a') {
+                filtered = allResults.filter(r => r.tier === 'A');
+            }
+            
+            document.getElementById('resultCount').textContent = `${filtered.length} endpoint${filtered.length !== 1 ? 's' : ''} found`;
+            
+            if (filtered.length === 0) {
+                resultsEl.innerHTML = '<div class="no-results"><p>No endpoints found</p><p style="font-size:0.85rem;margin-top:8px;">Try a different search term</p></div>';
+                return;
+            }
+            
+            resultsEl.innerHTML = filtered.map(r => `
+                <div class="result-card">
+                    <div class="result-header">
+                        <div>
+                            <div class="result-title">${escapeHtml(r.url.split('/').slice(-1)[0] || r.domain)}</div>
+                            <div class="result-domain">${escapeHtml(r.domain)}</div>
+                        </div>
+                    </div>
+                    <div class="result-description">${escapeHtml(r.description || 'No description')}</div>
+                    <div class="result-meta">
+                        <span class="meta-item price">$${r.priceUsd?.toFixed(3) || '?'}/call</span>
+                        <span class="meta-item">
+                            <span class="health-dot health-${r.health || 'unknown'}"></span>
+                            ${r.health || 'unknown'}
+                        </span>
+                        <span class="tier tier-${r.tier || 'D'}">${r.tier || '?'}</span>
+                        <span class="category">${escapeHtml(r.category || 'uncategorized')}</span>
+                        <a href="${escapeHtml(r.url)}" target="_blank" class="try-btn">View →</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+    </script>
+</body>
+</html>
