@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoring Methodology — Agent Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #0a0a0b; --surface: #141416; --border: #27272a; --text: #fafafa; --text-muted: #a1a1aa; --accent: #3b82f6; --green: #22c55e; --yellow: #eab308; --red: #ef4444; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 800px; margin: 0 auto; padding: 0 24px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; }
+        .nav-links a:hover { color: var(--text); }
+        main { padding: 60px 0; }
+        h1 { font-size: 2.5rem; margin-bottom: 16px; }
+        h2 { font-size: 1.5rem; margin: 48px 0 20px; padding-top: 32px; border-top: 1px solid var(--border); }
+        h3 { font-size: 1.1rem; margin: 24px 0 12px; color: var(--accent); }
+        p { color: var(--text-muted); margin-bottom: 16px; }
+        .subtitle { font-size: 1.1rem; margin-bottom: 32px; }
+        .principles { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 32px 0; }
+        .principles h3 { margin-top: 0; color: var(--text); }
+        .principles ul { margin: 16px 0 0 20px; }
+        .principles li { color: var(--text-muted); margin-bottom: 8px; }
+        .formula-box { background: #1a1a1d; border-radius: 12px; padding: 24px; margin: 24px 0; font-family: 'Fira Code', monospace; }
+        .formula { font-size: 1.1rem; color: var(--accent); margin-bottom: 16px; }
+        .factor { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .factor:last-child { border-bottom: none; }
+        .factor-name { font-weight: 500; }
+        .factor-weight { color: var(--green); }
+        .tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
+        .tier-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; }
+        .tier-letter { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .tier-A .tier-letter { color: var(--green); }
+        .tier-B .tier-letter { color: var(--accent); }
+        .tier-C .tier-letter { color: var(--yellow); }
+        .tier-D .tier-letter { color: var(--red); }
+        .tier-range { font-size: 0.9rem; color: var(--text-muted); }
+        .tier-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; }
+        table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: var(--text); font-weight: 600; }
+        td { color: var(--text-muted); }
+        .note { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 16px; margin: 24px 0; }
+        .note strong { color: var(--accent); }
+        footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 60px; }
+        @media (max-width: 768px) { .tier-grid { grid-template-columns: repeat(2, 1fr); } .nav-links { display: none; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo"><div class="logo-icon">🔍</div>Agent Index</a>
+            <nav class="nav-links">
+                <a href="/categories">Categories</a>
+                <a href="/docs">API Docs</a>
+                <a href="/submit">List Your Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1>Scoring Methodology</h1>
+        <p class="subtitle">How we rank and rate x402 endpoints — transparent, objective, and fair.</p>
+        
+        <div class="principles">
+            <h3>🎯 Our Principles</h3>
+            <p>Aligned with the x402 ethos of openness and fairness:</p>
+            <ul>
+                <li><strong>Transparent</strong> — Every factor and weight is publicly documented</li>
+                <li><strong>Objective</strong> — Based only on measurable, verifiable data</li>
+                <li><strong>Fair</strong> — No pay-to-play, no hidden boosts, no manual overrides</li>
+                <li><strong>Open</strong> — Same rules for everyone, from solo devs to enterprises</li>
+                <li><strong>Permissionless</strong> — Automatic scoring, no application required</li>
+            </ul>
+        </div>
+        
+        <h2>Quality Score (0-100)</h2>
+        <p>Every endpoint receives a Quality Score from 0-100, calculated automatically from objective metrics:</p>
+        
+        <div class="formula-box">
+            <div class="formula">Quality Score = (Uptime × 0.35) + (Speed × 0.25) + (Documentation × 0.20) + (Freshness × 0.20)</div>
+            <div class="factor">
+                <span class="factor-name">Uptime Score</span>
+                <span class="factor-weight">35%</span>
+            </div>
+            <div class="factor">
+                <span class="factor-name">Speed Score</span>
+                <span class="factor-weight">25%</span>
+            </div>
+            <div class="factor">
+                <span class="factor-name">Documentation Score</span>
+                <span class="factor-weight">20%</span>
+            </div>
+            <div class="factor">
+                <span class="factor-name">Freshness Score</span>
+                <span class="factor-weight">20%</span>
+            </div>
+        </div>
+        
+        <h3>Factor Breakdown</h3>
+        
+        <table>
+            <tr>
+                <th>Factor</th>
+                <th>How It's Measured</th>
+                <th>Score Range</th>
+            </tr>
+            <tr>
+                <td><strong>Uptime</strong></td>
+                <td>% of successful health checks over last 7 days. We ping endpoints every 30 minutes.</td>
+                <td>0-100 (direct %)</td>
+            </tr>
+            <tr>
+                <td><strong>Speed</strong></td>
+                <td>Average response time. <500ms = 100, 500-1000ms = 75, 1000-2000ms = 50, 2000-5000ms = 25, >5000ms = 0</td>
+                <td>0-100</td>
+            </tr>
+            <tr>
+                <td><strong>Documentation</strong></td>
+                <td>Has description (+40), has input schema (+30), has output schema (+30)</td>
+                <td>0-100</td>
+            </tr>
+            <tr>
+                <td><strong>Freshness</strong></td>
+                <td>Last verified active. Today = 100, 1-3 days = 80, 4-7 days = 60, 8-14 days = 40, 15-30 days = 20, >30 days = 0</td>
+                <td>0-100</td>
+            </tr>
+        </table>
+        
+        <h2>Quality Tiers (A/B/C/D)</h2>
+        <p>For quick reference, scores are grouped into tiers:</p>
+        
+        <div class="tier-grid">
+            <div class="tier-card tier-A">
+                <div class="tier-letter">A</div>
+                <div class="tier-range">Score 75-100</div>
+                <div class="tier-desc">Excellent reliability & documentation</div>
+            </div>
+            <div class="tier-card tier-B">
+                <div class="tier-letter">B</div>
+                <div class="tier-range">Score 50-74</div>
+                <div class="tier-desc">Good quality, minor issues</div>
+            </div>
+            <div class="tier-card tier-C">
+                <div class="tier-letter">C</div>
+                <div class="tier-range">Score 25-49</div>
+                <div class="tier-desc">Usable but needs improvement</div>
+            </div>
+            <div class="tier-card tier-D">
+                <div class="tier-letter">D</div>
+                <div class="tier-range">Score 0-24</div>
+                <div class="tier-desc">Unreliable or undocumented</div>
+            </div>
+        </div>
+        
+        <h2>Health Status</h2>
+        <p>Separate from quality score, we track real-time health:</p>
+        
+        <table>
+            <tr>
+                <th>Status</th>
+                <th>Definition</th>
+            </tr>
+            <tr>
+                <td>🟢 <strong>Healthy</strong></td>
+                <td>Responded successfully to last 3+ health checks, response time under 2 seconds</td>
+            </tr>
+            <tr>
+                <td>🟡 <strong>Degraded</strong></td>
+                <td>Responding but slow (>2s) or intermittent failures in last 24 hours</td>
+            </tr>
+            <tr>
+                <td>🔴 <strong>Unhealthy</strong></td>
+                <td>Failed last 3+ health checks or completely unresponsive</td>
+            </tr>
+            <tr>
+                <td>⚪ <strong>Unknown</strong></td>
+                <td>Not yet checked or no recent health data</td>
+            </tr>
+        </table>
+        
+        <h2>What We Don't Do</h2>
+        <div class="note">
+            <strong>No paid rankings.</strong> You cannot pay to boost your score or ranking.<br><br>
+            <strong>No manual overrides.</strong> Scores are calculated automatically — we don't manually adjust them.<br><br>
+            <strong>No hidden factors.</strong> Every input to the score is documented above.<br><br>
+            <strong>No favoritism.</strong> Same algorithm for everyone, including our own endpoints.
+        </div>
+        
+        <h2>Improving Your Score</h2>
+        <p>Want a better score? Here's what actually helps:</p>
+        <ul style="margin: 16px 0 0 20px; color: var(--text-muted);">
+            <li>Keep your endpoint online and responsive (affects Uptime & Speed)</li>
+            <li>Add detailed descriptions to your x402 config (affects Documentation)</li>
+            <li>Include input/output schemas in your Bazaar extensions (affects Documentation)</li>
+            <li>Ensure your endpoint returns proper 402 responses (affects Health)</li>
+        </ul>
+        
+        <h2>Data Sources</h2>
+        <p>We index endpoints from:</p>
+        <ul style="margin: 16px 0 0 20px; color: var(--text-muted);">
+            <li><strong>Coinbase Bazaar</strong> — Official x402 discovery API</li>
+            <li><strong>Manual submissions</strong> — Via our <a href="/submit" style="color: var(--accent);">submit form</a></li>
+            <li><strong>Ecosystem scanning</strong> — We crawl known x402 deployments</li>
+        </ul>
+        
+        <h2>Questions?</h2>
+        <p>Our scoring is designed to be fair and transparent. If you have questions or find an issue, reach out on <a href="https://x.com/theagentindex" style="color: var(--accent);">Twitter @theagentindex</a>.</p>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Agent Index — The discovery layer for agent-to-agent commerce</p>
+        </div>
+    </footer>
+</body>
+</html>
