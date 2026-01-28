@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Index — Discover AI Agent Services</title>
+    <meta name="description" content="The search engine for AI agent services. Find, compare, and connect to x402 endpoints.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --border: #27272a;
+            --text: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --green: #22c55e;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--text);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+        
+        /* Search */
+        .search-container {
+            max-width: 640px;
+            margin: 0 auto 32px;
+        }
+        
+        .search-box {
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        
+        .search-box:focus-within {
+            border-color: var(--accent);
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 18px 24px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.1rem;
+            outline: none;
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .search-box button {
+            padding: 18px 32px;
+            background: var(--accent);
+            border: none;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .search-box button:hover {
+            background: var(--accent-hover);
+        }
+        
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-bottom: 80px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        /* Categories */
+        .categories {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        
+        .category-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            text-decoration: none;
+            color: var(--text);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        
+        .category-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+        
+        .category-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .category-count {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* Featured */
+        .featured {
+            padding: 60px 0;
+        }
+        
+        .endpoint-grid {
+            display: grid;
+            gap: 16px;
+        }
+        
+        .endpoint-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+        
+        .endpoint-card:hover {
+            border-color: var(--accent);
+        }
+        
+        .endpoint-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .endpoint-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .endpoint-meta {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        
+        .endpoint-price {
+            font-weight: 600;
+            color: var(--green);
+        }
+        
+        .endpoint-uptime {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .uptime-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+        }
+        
+        /* CTA */
+        .cta {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+        
+        .cta p {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 16px 32px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .cta-button:hover {
+            background: var(--accent-hover);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            color: var(--text);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .endpoint-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">🔍</div>
+                Agent Index
+            </a>
+            <nav class="nav-links">
+                <a href="#categories">Categories</a>
+                <a href="#featured">Featured</a>
+                <a href="/docs">API</a>
+                <a href="/submit">List Your Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>The Search Engine<br>for AI Agents</h1>
+                <p>Discover, compare, and connect to x402 payment-enabled API endpoints. Find the right service for your agent.</p>
+                
+                <div class="search-container">
+                    <form class="search-box" action="/search" method="GET">
+                        <input type="text" name="q" placeholder="Search endpoints... (e.g., weather, crypto prices, news)" autocomplete="off">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="endpoints-count">103</div>
+                        <div class="stat-label">Endpoints Indexed</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="domains-count">42</div>
+                        <div class="stat-label">Unique Providers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="avg-price">$0.02</div>
+                        <div class="stat-label">Avg. Price/Call</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="categories" id="categories">
+            <div class="container">
+                <h2 class="section-title">Browse by Category</h2>
+                <div class="category-grid">
+                    <a href="/search?category=crypto" class="category-card">
+                        <div class="category-icon">💰</div>
+                        <div class="category-name">Crypto & DeFi</div>
+                        <div class="category-count">34 endpoints</div>
+                    </a>
+                    <a href="/search?category=weather" class="category-card">
+                        <div class="category-icon">🌤️</div>
+                        <div class="category-name">Weather</div>
+                        <div class="category-count">12 endpoints</div>
+                    </a>
+                    <a href="/search?category=news" class="category-card">
+                        <div class="category-icon">📰</div>
+                        <div class="category-name">News & Media</div>
+                        <div class="category-count">18 endpoints</div>
+                    </a>
+                    <a href="/search?category=ai" class="category-card">
+                        <div class="category-icon">🤖</div>
+                        <div class="category-name">AI & ML</div>
+                        <div class="category-count">15 endpoints</div>
+                    </a>
+                    <a href="/search?category=data" class="category-card">
+                        <div class="category-icon">📊</div>
+                        <div class="category-name">Data & Analytics</div>
+                        <div class="category-count">24 endpoints</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="featured" id="featured">
+            <div class="container">
+                <h2 class="section-title">Featured Endpoints</h2>
+                <div class="endpoint-grid">
+                    <div class="endpoint-card">
+                        <div class="endpoint-info">
+                            <h3>Whale Watch</h3>
+                            <p>Real-time whale transaction alerts for major tokens</p>
+                        </div>
+                        <div class="endpoint-meta">
+                            <span class="endpoint-price">$0.03/call</span>
+                            <span class="endpoint-uptime">
+                                <span class="uptime-dot"></span>
+                                99.8% uptime
+                            </span>
+                        </div>
+                    </div>
+                    <div class="endpoint-card">
+                        <div class="endpoint-info">
+                            <h3>News Summarizer</h3>
+                            <p>AI-powered news summarization across 500+ sources</p>
+                        </div>
+                        <div class="endpoint-meta">
+                            <span class="endpoint-price">$0.02/call</span>
+                            <span class="endpoint-uptime">
+                                <span class="uptime-dot"></span>
+                                98.5% uptime
+                            </span>
+                        </div>
+                    </div>
+                    <div class="endpoint-card">
+                        <div class="endpoint-info">
+                            <h3>Token Analyzer</h3>
+                            <p>Deep analysis of any ERC-20 or SPL token</p>
+                        </div>
+                        <div class="endpoint-meta">
+                            <span class="endpoint-price">$0.05/call</span>
+                            <span class="endpoint-uptime">
+                                <span class="uptime-dot"></span>
+                                99.2% uptime
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta">
+            <div class="container">
+                <h2>List Your x402 Service</h2>
+                <p>Get discovered by thousands of AI agents. Free to list.</p>
+                <a href="/submit" class="cta-button">Submit Your Endpoint</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Agent Index — The discovery layer for agent-to-agent commerce</p>
+            <p style="margin-top: 8px;">
+                <a href="/api">API</a> · 
+                <a href="/docs">Docs</a> · 
+                <a href="https://twitter.com/agentindex">Twitter</a>
+            </p>
+        </div>
+    </footer>
+    
+    <script>
+        // Fetch live stats from API
+        async function updateStats() {
+            try {
+                const res = await fetch('https://209.38.42.28:4402/stats');
+                const data = await res.json();
+                if (data.totalEndpoints) {
+                    document.getElementById('endpoints-count').textContent = data.totalEndpoints;
+                }
+                if (data.uniqueDomains) {
+                    document.getElementById('domains-count').textContent = data.uniqueDomains;
+                }
+                if (data.avgPrice) {
+                    document.getElementById('avg-price').textContent = '$' + data.avgPrice.toFixed(2);
+                }
+            } catch (e) {
+                // Keep static values on error
+            }
+        }
+        updateStats();
+    </script>
+</body>
+</html>
