@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * { margin: 0; padding: 0; }
+        body {
+            width: 1500px;
+            height: 500px;
+            background: linear-gradient(135deg, #0a0a0b 0%, #141416 50%, #1e3a5f 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .grid {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(59,130,246,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59,130,246,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .content {
+            text-align: center;
+            z-index: 1;
+        }
+        .title {
+            font-size: 72px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .icon {
+            font-size: 64px;
+        }
+        .tagline {
+            font-size: 28px;
+            color: #a1a1aa;
+            font-weight: 400;
+        }
+        .stats {
+            display: flex;
+            gap: 60px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        .stat-label {
+            font-size: 16px;
+            color: #71717a;
+            margin-top: 4px;
+        }
+        .glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .glow1 { top: -100px; right: 100px; }
+        .glow2 { bottom: -150px; left: 200px; }
+    </style>
+</head>
+<body>
+    <div class="grid"></div>
+    <div class="glow glow1"></div>
+    <div class="glow glow2"></div>
+    <div class="content">
+        <div class="title">
+            <span class="icon">🔍</span>
+            Agent Index
+        </div>
+        <div class="tagline">The search engine for AI agents</div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">100+</div>
+                <div class="stat-label">Endpoints</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">x402</div>
+                <div class="stat-label">Powered</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Monitoring</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
