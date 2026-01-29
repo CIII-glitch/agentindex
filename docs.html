@@ -26,7 +26,7 @@
     <meta name="twitter:description" content="REST API for searching x402 AI agent endpoints. Free search, premium analytics.">
     <meta name="twitter:image" content="https://theagentindex.app/brand/og-image.png">
     
-    <!-- Structured Data - TechArticle -->
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -34,43 +34,35 @@
         "headline": "Agent Index API Documentation",
         "description": "Complete REST API documentation for searching and discovering x402 payment-enabled endpoints",
         "url": "https://theagentindex.app/docs.html",
-        "author": {
-            "@type": "Organization",
-            "name": "Agent Index"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "Agent Index",
-            "url": "https://theagentindex.app"
-        },
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://theagentindex.app/docs.html"
-        }
+        "author": { "@type": "Organization", "name": "Agent Index" },
+        "publisher": { "@type": "Organization", "name": "Agent Index", "url": "https://theagentindex.app" }
     }
     </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --bg: #0a0a0b; --surface: #141416; --border: #27272a; --text: #fafafa; --text-muted: #a1a1aa; --accent: #3b82f6; --green: #22c55e; --yellow: #eab308; }
+        :root { --bg: #0a0a0b; --surface: #141416; --border: #27272a; --text: #fafafa; --text-muted: #a1a1aa; --accent: #3b82f6; --green: #22c55e; --yellow: #eab308; --red: #ef4444; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
         .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
         header { padding: 20px 0; border-bottom: 1px solid var(--border); }
         .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 900px; margin: 0 auto; padding: 0 24px; }
         .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
         .nav-links { display: flex; gap: 32px; }
         .nav-links a { color: var(--text-muted); text-decoration: none; }
         .nav-links a:hover, .nav-links a.active { color: var(--text); }
         main { padding: 60px 0; }
         h1 { font-size: 2.5rem; margin-bottom: 16px; }
         h2 { font-size: 1.5rem; margin: 48px 0 16px; padding-top: 24px; border-top: 1px solid var(--border); }
+        h2:first-of-type { border-top: none; margin-top: 32px; }
         h3 { font-size: 1.1rem; margin: 24px 0 12px; color: var(--accent); }
         p { color: var(--text-muted); margin-bottom: 16px; }
-        .subtitle { font-size: 1.1rem; margin-bottom: 48px; }
+        .subtitle { font-size: 1.1rem; margin-bottom: 32px; }
+        .base-url { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 24px 0; }
+        .base-url code { font-size: 1rem; color: var(--green); }
         .endpoint { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 24px; overflow: hidden; }
-        .endpoint-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+        .endpoint-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .method { padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; font-family: 'Fira Code', monospace; }
         .method-get { background: rgba(34, 197, 94, 0.2); color: var(--green); }
         .method-post { background: rgba(59, 130, 246, 0.2); color: var(--accent); }
@@ -78,143 +70,220 @@
         .price-tag { margin-left: auto; padding: 4px 10px; background: rgba(234, 179, 8, 0.2); color: var(--yellow); border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
         .free-tag { background: rgba(34, 197, 94, 0.2); color: var(--green); }
         .endpoint-body { padding: 20px; }
-        .endpoint-desc { margin-bottom: 16px; }
+        .endpoint-desc { margin-bottom: 16px; color: var(--text); }
         pre { background: #1a1a1d; border-radius: 8px; padding: 16px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 0.85rem; margin: 12px 0; }
         code { font-family: 'Fira Code', monospace; background: var(--surface); padding: 2px 6px; border-radius: 4px; font-size: 0.9rem; }
         .params { margin: 16px 0; }
         .param { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
         .param:last-child { border-bottom: none; }
-        .param-name { font-family: 'Fira Code', monospace; color: var(--accent); min-width: 120px; }
+        .param-name { font-family: 'Fira Code', monospace; color: var(--accent); min-width: 140px; }
         .param-type { color: var(--text-muted); font-size: 0.85rem; min-width: 80px; }
         .param-desc { color: var(--text-muted); font-size: 0.9rem; }
         .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 500; margin-left: 8px; }
-        .badge-required { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .badge-required { background: rgba(239, 68, 68, 0.2); color: var(--red); }
         .badge-optional { background: rgba(161, 161, 170, 0.2); color: var(--text-muted); }
-        footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.9rem; }
-        footer a { color: var(--text-muted); text-decoration: none; }
+        .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 32px 0; }
+        .toc h3 { margin: 0 0 12px; color: var(--text); }
+        .toc ul { list-style: none; }
+        .toc li { padding: 6px 0; }
+        .toc a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        .toc a:hover { color: var(--accent); }
+        .toc .free { color: var(--green); }
+        .toc .premium { color: var(--yellow); }
+        footer { padding: 40px 0; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
+        footer nav { margin-bottom: 16px; text-align: center; }
+        footer nav a { color: var(--text-muted); text-decoration: none; }
+        footer nav a:hover { color: var(--accent); }
+        footer p { text-align: center; }
         @media (max-width: 768px) { .nav-links { display: none; } h1 { font-size: 2rem; } .param { flex-direction: column; gap: 4px; } }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <a href="/" class="logo"><div class="logo-icon">🔍</div>Agent Index</a>
+            <a href="/" class="logo"><div class="logo-icon">⚡</div>Agent Index</a>
             <nav class="nav-links">
-                <a href="/categories">Categories</a>
-                <a href="/docs" class="active">API Docs</a>
-                <a href="/submit">List Your Service</a>
+                <a href="/categories.html">Categories</a>
+                <a href="/docs.html" class="active">API Docs</a>
+                <a href="/scoring.html">Scoring</a>
+                <a href="/submit.html">Submit</a>
             </nav>
         </div>
     </header>
     
     <main class="container">
         <h1>API Documentation</h1>
-        <p class="subtitle">Programmatically search and discover x402 endpoints</p>
+        <p class="subtitle">Programmatically search and discover x402 endpoints. Free tier available.</p>
         
-        <p><strong>Base URL:</strong> <code>https://agentindex.netlify.app/api</code></p>
-        <p>All endpoints return JSON. Free endpoints require no authentication. Premium endpoints require x402 payment.</p>
+        <div class="base-url">
+            <strong>Base URL:</strong> <code>https://theagentindex.app/api</code>
+        </div>
+        
+        <p>All endpoints return JSON. Free endpoints require no authentication. Premium endpoints require x402 payment (USDC on Base).</p>
+        
+        <div class="toc">
+            <h3>📋 Endpoints</h3>
+            <ul>
+                <li><span class="free">FREE</span> — <a href="#search">GET /search</a> — Search endpoints</li>
+                <li><span class="free">FREE</span> — <a href="#stats">GET /stats</a> — Index statistics</li>
+                <li><span class="free">FREE</span> — <a href="#categories">GET /categories</a> — List categories</li>
+                <li><span class="free">FREE</span> — <a href="#verify">GET /verify/:wallet</a> — Check wallet USDC balance</li>
+                <li><span class="free">FREE</span> — <a href="#submit">POST /submit</a> — Submit new endpoint</li>
+                <li><span class="premium">$0.02</span> — <a href="#analytics">GET /premium/analytics</a> — Deep analytics</li>
+                <li><span class="premium">$0.01</span> — <a href="#trending">GET /premium/trending</a> — Trending endpoints</li>
+                <li><span class="premium">$0.01</span> — <a href="#compare">GET /premium/compare</a> — Compare endpoints</li>
+                <li><span class="premium">$0.03</span> — <a href="#recommend">GET /premium/recommend</a> — AI recommendations</li>
+                <li><span class="premium">$0.02</span> — <a href="#reputation">GET /premium/reputation</a> — Endpoint reputation</li>
+                <li><span class="premium">$0.02</span> — <a href="#leaders">GET /premium/leaders</a> — Category leaders</li>
+                <li><span class="premium">$0.01</span> — <a href="#budget">GET /premium/budget</a> — Budget optimizer</li>
+            </ul>
+        </div>
         
         <h2>Free Endpoints</h2>
         
-        <div class="endpoint">
+        <!-- SEARCH -->
+        <div class="endpoint" id="search">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/search</span>
                 <span class="price-tag free-tag">FREE</span>
             </div>
             <div class="endpoint-body">
-                <p class="endpoint-desc">Search indexed x402 endpoints by keyword, category, or filters.</p>
+                <p class="endpoint-desc">Search indexed x402 endpoints by keyword, category, price, or health status.</p>
                 <h3>Query Parameters</h3>
                 <div class="params">
-                    <div class="param">
-                        <span class="param-name">q</span>
-                        <span class="param-type">string</span>
-                        <span class="param-desc">Search query (matches URL, domain, description)</span>
-                    </div>
-                    <div class="param">
-                        <span class="param-name">category</span>
-                        <span class="param-type">string</span>
-                        <span class="param-desc">Filter by category (e.g., "ai/ml", "defi", "crypto-data")</span>
-                    </div>
-                    <div class="param">
-                        <span class="param-name">maxPrice</span>
-                        <span class="param-type">number</span>
-                        <span class="param-desc">Maximum price per call in USD</span>
-                    </div>
-                    <div class="param">
-                        <span class="param-name">healthyOnly</span>
-                        <span class="param-type">boolean</span>
-                        <span class="param-desc">Only return healthy endpoints (true/false)</span>
-                    </div>
-                    <div class="param">
-                        <span class="param-name">limit</span>
-                        <span class="param-type">number</span>
-                        <span class="param-desc">Max results to return (default: 20)</span>
-                    </div>
+                    <div class="param"><span class="param-name">q</span><span class="param-type">string</span><span class="param-desc">Search query (matches URL, domain, description, category)</span></div>
+                    <div class="param"><span class="param-name">category</span><span class="param-type">string</span><span class="param-desc">Filter by category (e.g., "ai/ml", "defi", "crypto-data")</span></div>
+                    <div class="param"><span class="param-name">maxPrice</span><span class="param-type">number</span><span class="param-desc">Maximum price per call in USD</span></div>
+                    <div class="param"><span class="param-name">healthyOnly</span><span class="param-type">boolean</span><span class="param-desc">Only return healthy endpoints (true/false)</span></div>
+                    <div class="param"><span class="param-name">limit</span><span class="param-type">number</span><span class="param-desc">Max results (default: 20)</span></div>
                 </div>
                 <h3>Example</h3>
                 <pre>GET /api/search?q=crypto&maxPrice=0.05&healthyOnly=true</pre>
                 <pre>{
-  "count": 9,
+  "count": 12,
   "results": [
     {
-      "url": "https://example.com/api/prices",
-      "domain": "example.com",
-      "description": "Real-time crypto prices",
-      "priceUsd": 0.02,
+      "id": "aHR0cHM6Ly9hcGk...",
+      "url": "https://api.example.com/prices",
+      "domain": "api.example.com",
+      "description": "Real-time crypto prices for BTC, ETH, SOL",
+      "priceUsd": 0.001,
       "category": "crypto-data",
       "health": "healthy",
-      "tier": "A"
+      "tier": "A",
+      "score": 87
     }
   ]
 }</pre>
             </div>
         </div>
         
-        <div class="endpoint">
+        <!-- STATS -->
+        <div class="endpoint" id="stats">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/stats</span>
                 <span class="price-tag free-tag">FREE</span>
             </div>
             <div class="endpoint-body">
-                <p class="endpoint-desc">Get aggregate statistics about indexed endpoints.</p>
-                <h3>Response</h3>
+                <p class="endpoint-desc">Get aggregate statistics about all indexed endpoints.</p>
                 <pre>{
-  "total": 108,
-  "healthy": 63,
-  "healthRate": "58.3%",
-  "avgPriceUsd": "0.0238",
-  "uniqueDomains": 48,
-  "indexed": "2026-01-28T13:45:06.521Z"
+  "indexed": "2026-01-29T14:30:00.000Z",
+  "total": 523,
+  "healthy": 312,
+  "healthRate": "59.7%",
+  "avgPriceUsd": "0.0156",
+  "uniqueDomains": 127
 }</pre>
             </div>
         </div>
         
-        <div class="endpoint">
+        <!-- CATEGORIES -->
+        <div class="endpoint" id="categories">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/categories</span>
                 <span class="price-tag free-tag">FREE</span>
             </div>
             <div class="endpoint-body">
-                <p class="endpoint-desc">List all categories and endpoint counts.</p>
+                <p class="endpoint-desc">List all categories with endpoint counts.</p>
                 <pre>{
   "categories": {
-    "ai/ml": 24,
-    "defi": 18,
-    "crypto-data": 15,
-    "content/ipfs": 12,
-    ...
+    "ai/ml": 89,
+    "crypto-data": 76,
+    "defi": 54,
+    "content/ipfs": 38,
+    "news": 31,
+    "weather": 12,
+    "other": 223
   }
 }</pre>
             </div>
         </div>
         
-        <h2>Premium Endpoints (x402)</h2>
-        <p>These endpoints require x402 payment. They return <code>402 Payment Required</code> with payment instructions in the response header.</p>
+        <!-- VERIFY -->
+        <div class="endpoint" id="verify">
+            <div class="endpoint-header">
+                <span class="method method-get">GET</span>
+                <span class="path">/verify/:wallet</span>
+                <span class="price-tag free-tag">FREE</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="endpoint-desc">Check USDC balance for any wallet on Base. Useful for verifying agent wallets before transactions.</p>
+                <h3>URL Parameters</h3>
+                <div class="params">
+                    <div class="param"><span class="param-name">wallet</span><span class="param-type">address</span><span class="param-desc">Ethereum address (0x...) <span class="badge badge-required">required</span></span></div>
+                </div>
+                <h3>Example</h3>
+                <pre>GET /api/verify/0xf5b62393d8e26c8ae2f8074adc6f6aec8b1d1bc1</pre>
+                <pre>{
+  "wallet": "0xf5b62393d8e26c8ae2f8074adc6f6aec8b1d1bc1",
+  "usdcBalance": 12.45,
+  "basescanUrl": "https://basescan.org/address/0xf5b...#tokentxns",
+  "usdcContract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+  "network": "Base (eip155:8453)",
+  "verifiedAt": "2026-01-29T14:30:00.000Z"
+}</pre>
+            </div>
+        </div>
         
-        <div class="endpoint">
+        <!-- SUBMIT -->
+        <div class="endpoint" id="submit">
+            <div class="endpoint-header">
+                <span class="method method-post">POST</span>
+                <span class="path">/submit</span>
+                <span class="price-tag free-tag">FREE</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="endpoint-desc">Submit a new x402 endpoint for indexing. We verify it returns 402 before adding.</p>
+                <h3>Request Body (JSON)</h3>
+                <div class="params">
+                    <div class="param"><span class="param-name">url</span><span class="param-type">string</span><span class="param-desc">Full endpoint URL <span class="badge badge-required">required</span></span></div>
+                    <div class="param"><span class="param-name">description</span><span class="param-type">string</span><span class="param-desc">What the endpoint does</span></div>
+                    <div class="param"><span class="param-name">email</span><span class="param-type">string</span><span class="param-desc">Contact email (optional)</span></div>
+                </div>
+                <h3>Example</h3>
+                <pre>POST /api/submit
+Content-Type: application/json
+
+{
+  "url": "https://myapi.com/data",
+  "description": "Real-time market data feed"
+}</pre>
+                <pre>// Success
+{ "success": true, "message": "Verified and added to index!" }
+
+// Error
+{ "error": "Not a valid x402 endpoint (got HTTP 200, expected 402)" }</pre>
+            </div>
+        </div>
+        
+        <h2>Premium Endpoints (x402)</h2>
+        <p>These endpoints require x402 payment in USDC on Base. They return <code>402 Payment Required</code> with payment instructions. Use the <code>@x402/fetch</code> SDK to pay automatically.</p>
+        
+        <!-- ANALYTICS -->
+        <div class="endpoint" id="analytics">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/premium/analytics</span>
@@ -223,34 +292,40 @@
             <div class="endpoint-body">
                 <p class="endpoint-desc">Deep analytics: most reliable endpoints, best value services, price distribution stats.</p>
                 <pre>{
-  "mostReliable": [...],
-  "bestValue": [...],
-  "priceDistribution": {
-    "min": 0.001,
-    "max": 0.5,
-    "avg": 0.024
-  },
-  "totalIndexed": 108
+  "mostReliable": [
+    { "url": "https://...", "domain": "api.example.com", "ms": 142, "score": 95 }
+  ],
+  "bestValue": [
+    { "url": "https://...", "price": 0.001, "score": 88 }
+  ],
+  "priceDistribution": { "min": 0.0001, "max": 0.5, "avg": 0.0156 },
+  "totalIndexed": 523
 }</pre>
             </div>
         </div>
         
-        <div class="endpoint">
+        <!-- TRENDING -->
+        <div class="endpoint" id="trending">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/premium/trending</span>
                 <span class="price-tag">$0.01</span>
             </div>
             <div class="endpoint-body">
-                <p class="endpoint-desc">Get newest endpoints and top-tier rated services.</p>
+                <p class="endpoint-desc">Discover newest endpoints and top-tier rated services.</p>
                 <pre>{
-  "newest": [...],
-  "topTier": [...]
+  "newest": [
+    { "url": "https://...", "domain": "...", "price": 0.01, "category": "ai/ml" }
+  ],
+  "topTier": [
+    { "url": "https://...", "domain": "...", "score": 95, "price": 0.005 }
+  ]
 }</pre>
             </div>
         </div>
         
-        <div class="endpoint">
+        <!-- COMPARE -->
+        <div class="endpoint" id="compare">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/premium/compare</span>
@@ -260,47 +335,55 @@
                 <p class="endpoint-desc">Compare multiple endpoints side-by-side.</p>
                 <h3>Query Parameters</h3>
                 <div class="params">
-                    <div class="param">
-                        <span class="param-name">urls</span>
-                        <span class="param-type">string</span>
-                        <span class="param-desc">Comma-separated endpoint URLs to compare <span class="badge badge-required">required</span></span>
-                    </div>
+                    <div class="param"><span class="param-name">urls</span><span class="param-type">string</span><span class="param-desc">Comma-separated endpoint URLs <span class="badge badge-required">required</span></span></div>
                 </div>
-                <pre>GET /api/premium/compare?urls=https://api1.com,https://api2.com</pre>
+                <pre>GET /api/premium/compare?urls=https://api1.com/data,https://api2.com/data</pre>
+                <pre>{
+  "compared": [
+    { "url": "https://api1.com/data", "found": true, "price": 0.01, "health": "healthy", "score": 85, "tier": "A" },
+    { "url": "https://api2.com/data", "found": true, "price": 0.02, "health": "degraded", "score": 62, "tier": "B" }
+  ]
+}</pre>
             </div>
         </div>
         
-        <div class="endpoint">
+        <!-- RECOMMEND -->
+        <div class="endpoint" id="recommend">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/premium/recommend</span>
                 <span class="price-tag">$0.03</span>
             </div>
             <div class="endpoint-body">
-                <p class="endpoint-desc">AI-powered endpoint recommendation. Describe what you need in plain language.</p>
+                <p class="endpoint-desc">AI-powered endpoint recommendations. Describe what you need in plain language.</p>
                 <h3>Query Parameters</h3>
                 <div class="params">
-                    <div class="param">
-                        <span class="param-name">need</span>
-                        <span class="param-type">string</span>
-                        <span class="param-desc">What you need (e.g., "real-time crypto prices") <span class="badge badge-required">required</span></span>
-                    </div>
-                    <div class="param">
-                        <span class="param-name">maxPrice</span>
-                        <span class="param-type">number</span>
-                        <span class="param-desc">Maximum price per call <span class="badge badge-optional">optional</span></span>
-                    </div>
-                    <div class="param">
-                        <span class="param-name">requireHealthy</span>
-                        <span class="param-type">boolean</span>
-                        <span class="param-desc">Only return healthy endpoints <span class="badge badge-optional">optional</span></span>
-                    </div>
+                    <div class="param"><span class="param-name">need</span><span class="param-type">string</span><span class="param-desc">What you need (e.g., "real-time crypto prices") <span class="badge badge-required">required</span></span></div>
+                    <div class="param"><span class="param-name">maxPrice</span><span class="param-type">number</span><span class="param-desc">Maximum price per call</span></div>
+                    <div class="param"><span class="param-name">requireHealthy</span><span class="param-type">boolean</span><span class="param-desc">Only return healthy endpoints</span></div>
                 </div>
-                <pre>GET /api/premium/recommend?need=I need real-time crypto prices&maxPrice=0.05</pre>
+                <pre>GET /api/premium/recommend?need=I need real-time BTC prices&maxPrice=0.01</pre>
+                <pre>{
+  "need": "I need real-time BTC prices",
+  "found": 5,
+  "recommendations": [
+    {
+      "url": "https://...",
+      "domain": "crypto-oracle.xyz",
+      "description": "Live BTC/USD prices updated every second",
+      "matchScore": 85,
+      "quality": "A",
+      "score": 92,
+      "price": 0.001,
+      "health": "healthy"
+    }
+  ]
+}</pre>
             </div>
         </div>
         
-        <div class="endpoint">
+        <!-- REPUTATION -->
+        <div class="endpoint" id="reputation">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/premium/reputation</span>
@@ -310,90 +393,114 @@
                 <p class="endpoint-desc">Detailed reputation and reliability history for a specific endpoint.</p>
                 <h3>Query Parameters</h3>
                 <div class="params">
-                    <div class="param">
-                        <span class="param-name">url</span>
-                        <span class="param-type">string</span>
-                        <span class="param-desc">Endpoint URL to check <span class="badge badge-required">required</span></span>
-                    </div>
+                    <div class="param"><span class="param-name">url</span><span class="param-type">string</span><span class="param-desc">Endpoint URL to check <span class="badge badge-required">required</span></span></div>
                 </div>
                 <pre>{
+  "url": "https://api.example.com/data",
+  "domain": "api.example.com",
+  "description": "Market data API",
   "reputation": {
     "overallScore": 87,
+    "tier": "A",
     "uptimePercent": "99.2",
-    "avgResponseTime": 245,
-    "trend": "stable"
+    "avgResponseTime": 156,
+    "checksTotal": 10,
+    "checksPassed": 10,
+    "lastCheck": "2026-01-29T14:25:00.000Z",
+    "trend": "stable",
+    "healthStatus": "healthy"
+  },
+  "breakdown": {
+    "uptimeScore": 100,
+    "speedScore": 100,
+    "documentationScore": 70,
+    "freshnessScore": 100
   }
 }</pre>
             </div>
         </div>
         
-        <div class="endpoint">
+        <!-- LEADERS -->
+        <div class="endpoint" id="leaders">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/premium/leaders</span>
                 <span class="price-tag">$0.02</span>
             </div>
             <div class="endpoint-body">
-                <p class="endpoint-desc">Get the top-rated endpoint in each category. One call to find the best across all categories.</p>
+                <p class="endpoint-desc">Get the top-rated endpoint in each category. Find the best service across all categories in one call.</p>
                 <pre>{
+  "totalCategories": 11,
   "leaders": {
-    "ai/ml": { "url": "...", "score": 95, "price": 0.02 },
-    "defi": { "url": "...", "score": 92, "price": 0.01 }
+    "ai/ml": { "url": "https://...", "domain": "ai-oracle.xyz", "score": 95, "tier": "A", "price": 0.02, "health": "healthy" },
+    "crypto-data": { "url": "https://...", "domain": "crypto-feed.io", "score": 92, "tier": "A", "price": 0.001, "health": "healthy" },
+    "defi": { "url": "https://...", "domain": "defi-api.com", "score": 88, "tier": "A", "price": 0.005, "health": "healthy" }
   }
 }</pre>
             </div>
         </div>
         
-        <div class="endpoint">
+        <!-- BUDGET -->
+        <div class="endpoint" id="budget">
             <div class="endpoint-header">
                 <span class="method method-get">GET</span>
                 <span class="path">/premium/budget</span>
                 <span class="price-tag">$0.01</span>
             </div>
             <div class="endpoint-body">
-                <p class="endpoint-desc">Find highest quality endpoints within your budget. Optimizes quality-per-dollar.</p>
+                <p class="endpoint-desc">Find highest quality endpoints within your budget. Optimizes for quality-per-dollar (value score).</p>
                 <h3>Query Parameters</h3>
                 <div class="params">
-                    <div class="param">
-                        <span class="param-name">maxPricePerCall</span>
-                        <span class="param-type">number</span>
-                        <span class="param-desc">Maximum price per call <span class="badge badge-required">required</span></span>
-                    </div>
-                    <div class="param">
-                        <span class="param-name">category</span>
-                        <span class="param-type">string</span>
-                        <span class="param-desc">Filter by category <span class="badge badge-optional">optional</span></span>
-                    </div>
+                    <div class="param"><span class="param-name">maxPricePerCall</span><span class="param-type">number</span><span class="param-desc">Maximum price per call in USD <span class="badge badge-required">required</span></span></div>
+                    <div class="param"><span class="param-name">category</span><span class="param-type">string</span><span class="param-desc">Filter by category</span></div>
                 </div>
-                <pre>GET /api/premium/budget?maxPricePerCall=0.02&category=defi</pre>
+                <pre>GET /api/premium/budget?maxPricePerCall=0.01&category=crypto-data</pre>
+                <pre>{
+  "budget": 0.01,
+  "category": "crypto-data",
+  "found": 23,
+  "optimized": [
+    { "url": "https://...", "domain": "...", "price": 0.001, "quality": 92, "tier": "A", "health": "healthy", "valueScore": 92000 },
+    { "url": "https://...", "domain": "...", "price": 0.002, "quality": 85, "tier": "A", "health": "healthy", "valueScore": 42500 }
+  ]
+}</pre>
             </div>
         </div>
         
         <h2>Using x402 Payments</h2>
         <p>To call premium endpoints, use the <code>@x402/fetch</code> SDK:</p>
         <pre>import { wrapFetchWithPayment } from '@x402/fetch';
+import { privateKeyToAccount } from 'viem/accounts';
 
-const fetchWithPayment = wrapFetchWithPayment(fetch, client, {
-  facilitatorUrl: 'https://api.cdp.coinbase.com/platform/v2/x402'
+const account = privateKeyToAccount(process.env.PRIVATE_KEY);
+
+const fetchWithPayment = wrapFetchWithPayment(fetch, account, {
+  network: 'base-mainnet'  // or 'base-sepolia' for testnet
 });
 
 const response = await fetchWithPayment(
-  'https://agentindex.netlify.app/api/premium/analytics'
+  'https://theagentindex.app/api/premium/analytics'
 );
 const data = await response.json();</pre>
         
         <h2>Rate Limits</h2>
-        <p>Free endpoints: 100 requests/minute<br>Premium endpoints: Unlimited (payment required per call)</p>
+        <p><strong>Free endpoints:</strong> 100 requests/minute per IP<br>
+        <strong>Premium endpoints:</strong> Unlimited (payment required per call)</p>
+        
+        <h2>Network Info</h2>
+        <p><strong>Chain:</strong> Base Mainnet (eip155:8453)<br>
+        <strong>Asset:</strong> USDC (0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)<br>
+        <strong>Facilitator:</strong> Coinbase CDP</p>
     </main>
     
     <footer>
         <div class="container">
-            <nav style="margin-bottom: 16px;">
-                <a href="/" style="color: var(--text-muted); text-decoration: none;">Home</a> · 
-                <a href="/search.html" style="color: var(--text-muted); text-decoration: none;">Search</a> · 
-                <a href="/categories.html" style="color: var(--text-muted); text-decoration: none;">Categories</a> · 
-                <a href="/scoring.html" style="color: var(--text-muted); text-decoration: none;">Scoring</a> · 
-                <a href="/submit.html" style="color: var(--text-muted); text-decoration: none;">Submit</a>
+            <nav>
+                <a href="/">Home</a> · 
+                <a href="/search.html">Search</a> · 
+                <a href="/categories.html">Categories</a> · 
+                <a href="/scoring.html">Scoring</a> · 
+                <a href="/submit.html">Submit</a>
             </nav>
             <p><strong>Agent Index</strong> — The discovery layer for x402 agent-to-agent commerce</p>
             <p style="margin-top: 8px; font-size: 0.8rem;">x402 API Documentation • REST API • AI Agent Integration • USDC Payments</p>
