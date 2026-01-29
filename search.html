@@ -11,16 +11,21 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg: #0a0a0b;
-            --surface: #141416;
+            --bg: #09090b;
+            --surface: #18181b;
+            --surface-elevated: #1f1f23;
             --border: #27272a;
+            --border-subtle: #3f3f46;
             --text: #fafafa;
-            --text-muted: #a1a1aa;
+            --text-secondary: #d4d4d8;
+            --text-muted: #71717a;
             --accent: #3b82f6;
             --accent-hover: #2563eb;
             --green: #22c55e;
+            --green-muted: #16a34a;
             --yellow: #eab308;
             --red: #ef4444;
+            --purple: #a855f7;
         }
         
         body {
@@ -31,11 +36,16 @@
             min-height: 100vh;
         }
         
-        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
         
+        /* Header */
         header {
-            padding: 20px 0;
+            padding: 16px 0;
             border-bottom: 1px solid var(--border);
+            background: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .header-content {
@@ -46,30 +56,123 @@
         }
         
         .logo {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--text);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             white-space: nowrap;
         }
         
         .logo-icon {
-            width: 28px;
-            height: 28px;
-            background: var(--accent);
-            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 16px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover { color: var(--text); }
+        
+        /* Search Bar */
+        .search-section {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .search-wrapper {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
         }
         
         .search-box {
             flex: 1;
-            max-width: 500px;
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        
+        .search-box:focus-within { border-color: var(--accent); }
+        
+        .search-icon {
+            padding: 14px 16px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 14px 0;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-box input::placeholder { color: var(--text-muted); }
+        
+        .search-box button {
+            padding: 14px 24px;
+            background: var(--accent);
+            border: none;
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .search-box button:hover { background: var(--accent-hover); }
+        
+        /* Controls Row */
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .result-count {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .result-count strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .control-group {
             display: flex;
             background: var(--surface);
             border: 1px solid var(--border);
@@ -77,108 +180,170 @@
             overflow: hidden;
         }
         
-        .search-box:focus-within { border-color: var(--accent); }
-        
-        .search-box input {
-            flex: 1;
-            padding: 12px 16px;
+        .control-btn {
+            padding: 8px 14px;
             background: transparent;
             border: none;
-            color: var(--text);
-            font-size: 0.95rem;
-            outline: none;
-        }
-        
-        .search-box button {
-            padding: 12px 20px;
-            background: var(--accent);
-            border: none;
-            color: white;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-        
-        .search-box button:hover { background: var(--accent-hover); }
-        
-        main { padding: 32px 0; }
-        
-        .search-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        .filters {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .filter-btn {
-            padding: 6px 12px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
             color: var(--text-muted);
             font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        .filter-btn:hover, .filter-btn.active {
-            border-color: var(--accent);
+        .control-btn:not(:last-child) {
+            border-right: 1px solid var(--border);
+        }
+        
+        .control-btn:hover { color: var(--text); background: var(--surface-elevated); }
+        .control-btn.active { color: var(--accent); background: var(--surface-elevated); }
+        
+        .sort-select {
+            padding: 8px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             color: var(--text);
+            font-size: 0.85rem;
+            cursor: pointer;
+            outline: none;
         }
         
-        .results { display: grid; gap: 12px; }
+        .sort-select:focus { border-color: var(--accent); }
         
+        /* Main Content */
+        main { padding: 24px 0 60px; }
+        
+        /* Results Grid */
+        .results-grid {
+            display: grid;
+            gap: 16px;
+        }
+        
+        /* Result Card */
         .result-card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 20px;
-            transition: border-color 0.2s;
+            padding: 20px 24px;
+            transition: all 0.2s;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+            align-items: start;
         }
         
-        .result-card:hover { border-color: var(--accent); }
+        .result-card:hover {
+            border-color: var(--border-subtle);
+            transform: translateY(-1px);
+        }
         
-        .result-header {
+        .result-card.tier-A {
+            border-left: 3px solid var(--green);
+        }
+        
+        .result-card.tier-B {
+            border-left: 3px solid var(--accent);
+        }
+        
+        .result-card.tier-C {
+            border-left: 3px solid var(--yellow);
+        }
+        
+        .result-card.tier-D {
+            border-left: 3px solid var(--red);
+            opacity: 0.8;
+        }
+        
+        .card-main {
+            min-width: 0;
+        }
+        
+        .card-header {
             display: flex;
-            justify-content: space-between;
             align-items: flex-start;
-            gap: 16px;
+            gap: 12px;
             margin-bottom: 8px;
         }
         
-        .result-title {
-            font-size: 1rem;
-            font-weight: 600;
-            word-break: break-word;
+        .endpoint-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--surface-elevated);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
         }
         
-        .result-domain {
+        .card-titles {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .endpoint-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .endpoint-name a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .endpoint-name a:hover {
+            color: var(--accent);
+        }
+        
+        .tier-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .tier-badge.tier-A { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+        .tier-badge.tier-B { background: rgba(59, 130, 246, 0.15); color: var(--accent); }
+        .tier-badge.tier-C { background: rgba(234, 179, 8, 0.15); color: var(--yellow); }
+        .tier-badge.tier-D { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+        
+        .domain-url {
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
-        .result-description {
-            color: var(--text-muted);
+        .endpoint-description {
+            color: var(--text-secondary);
             font-size: 0.9rem;
-            margin-bottom: 12px;
+            line-height: 1.5;
+            margin: 12px 0;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
         
-        .result-meta {
+        .card-meta {
             display: flex;
-            gap: 16px;
             flex-wrap: wrap;
-            align-items: center;
+            gap: 16px;
+            margin-top: 12px;
         }
         
         .meta-item {
@@ -188,7 +353,30 @@
             font-size: 0.85rem;
         }
         
-        .price { color: var(--green); font-weight: 600; }
+        .meta-icon {
+            color: var(--text-muted);
+            width: 16px;
+            height: 16px;
+        }
+        
+        .meta-label {
+            color: var(--text-muted);
+        }
+        
+        .meta-value {
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .meta-value.price {
+            color: var(--green);
+        }
+        
+        .health-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
         
         .health-dot {
             width: 8px;
@@ -196,65 +384,99 @@
             border-radius: 50%;
         }
         
-        .health-healthy { background: var(--green); }
-        .health-degraded { background: var(--yellow); }
-        .health-unhealthy, .health-unknown { background: var(--red); }
+        .health-dot.healthy { background: var(--green); box-shadow: 0 0 6px var(--green); }
+        .health-dot.degraded { background: var(--yellow); }
+        .health-dot.unhealthy { background: var(--red); }
+        .health-dot.unknown { background: var(--text-muted); }
         
-        .tier {
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .tier-A { background: rgba(34, 197, 94, 0.2); color: var(--green); }
-        .tier-B { background: rgba(59, 130, 246, 0.2); color: var(--accent); }
-        .tier-C { background: rgba(234, 179, 8, 0.2); color: var(--yellow); }
-        .tier-D { background: rgba(239, 68, 68, 0.2); color: var(--red); }
-        
-        .category {
-            padding: 2px 8px;
-            background: var(--border);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-        
-        .try-btn {
-            margin-left: auto;
-            padding: 6px 12px;
-            background: transparent;
-            border: 1px solid var(--border);
+        .category-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            background: var(--surface-elevated);
             border-radius: 6px;
-            color: var(--text-muted);
             font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        /* Card Actions */
+        .card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-end;
+        }
+        
+        .price-tag {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .price-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--green);
+        }
+        
+        .price-unit {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        
+        .action-btn {
+            padding: 10px 20px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-weight: 500;
             text-decoration: none;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        .try-btn:hover {
+        .action-btn:hover {
             border-color: var(--accent);
             color: var(--accent);
         }
         
-        .loading, .no-results, .error {
+        /* Loading / Empty States */
+        .state-container {
             text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
+            padding: 80px 20px;
         }
         
         .loading-spinner {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             border: 3px solid var(--border);
             border-top-color: var(--accent);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 20px;
         }
         
         @keyframes spin { to { transform: rotate(360deg); } }
         
+        .state-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .state-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        /* Footer */
         footer {
             padding: 40px 0;
             border-top: 1px solid var(--border);
@@ -263,11 +485,31 @@
             font-size: 0.85rem;
         }
         
-        @media (max-width: 640px) {
+        /* Responsive */
+        @media (max-width: 768px) {
             .header-content { flex-wrap: wrap; }
-            .search-box { max-width: 100%; order: 3; width: 100%; margin-top: 16px; }
-            .result-header { flex-direction: column; }
-            .result-meta { gap: 12px; }
+            .nav-links { display: none; }
+            
+            .result-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-actions {
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+                padding-top: 12px;
+                border-top: 1px solid var(--border);
+            }
+            
+            .controls-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .controls {
+                justify-content: space-between;
+            }
         }
     </style>
 </head>
@@ -275,37 +517,71 @@
     <header>
         <div class="container header-content">
             <a href="/" class="logo">
-                <div class="logo-icon">🔍</div>
+                <div class="logo-icon">⚡</div>
                 Agent Index
             </a>
-            <form class="search-box" id="searchForm">
-                <input type="text" name="q" id="searchInput" placeholder="Search endpoints..." autocomplete="off">
-                <button type="submit">Search</button>
-            </form>
+            <nav class="nav-links">
+                <a href="/categories.html">Categories</a>
+                <a href="/docs.html">API Docs</a>
+                <a href="/scoring.html">Scoring</a>
+                <a href="/submit.html">Submit</a>
+            </nav>
         </div>
     </header>
     
-    <main class="container">
-        <div class="search-info">
-            <span id="resultCount">Searching...</span>
-            <div class="filters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="healthy">Healthy Only</button>
-                <button class="filter-btn" data-filter="tier-a">Tier A</button>
+    <section class="search-section">
+        <div class="container">
+            <form class="search-wrapper" id="searchForm">
+                <div class="search-box">
+                    <span class="search-icon">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </span>
+                    <input type="text" name="q" id="searchInput" placeholder="Search for crypto prices, DeFi data, AI models, news..." autocomplete="off">
+                    <button type="submit">Search</button>
+                </div>
+            </form>
+            
+            <div class="controls-row">
+                <div class="result-count" id="resultCount">
+                    Loading...
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <button class="control-btn active" data-filter="all">All</button>
+                        <button class="control-btn" data-filter="healthy">
+                            <span style="width:8px;height:8px;background:#22c55e;border-radius:50%;"></span>
+                            Healthy
+                        </button>
+                        <button class="control-btn" data-filter="tier-a">Tier A</button>
+                    </div>
+                    
+                    <select class="sort-select" id="sortSelect">
+                        <option value="quality">Sort: Quality</option>
+                        <option value="price-low">Price: Low → High</option>
+                        <option value="price-high">Price: High → Low</option>
+                        <option value="speed">Response Time</option>
+                        <option value="name">Name A-Z</option>
+                    </select>
+                </div>
             </div>
         </div>
-        
-        <div class="results" id="results">
-            <div class="loading">
+    </section>
+    
+    <main class="container">
+        <div class="results-grid" id="results">
+            <div class="state-container">
                 <div class="loading-spinner"></div>
-                <p>Searching endpoints...</p>
+                <p class="state-title">Loading endpoints...</p>
             </div>
         </div>
     </main>
     
     <footer>
         <div class="container">
-            <p>Agent Index — The discovery layer for agent-to-agent commerce</p>
+            <p>Agent Index — The discovery layer for x402 agent commerce</p>
         </div>
     </footer>
     
@@ -313,41 +589,62 @@
         const API_BASE = '/api';
         let allResults = [];
         let currentFilter = 'all';
+        let currentSort = 'quality';
+        
+        // Category icons
+        const categoryIcons = {
+            'crypto': '₿',
+            'defi': '🏦',
+            'ai': '🤖',
+            'data': '📊',
+            'news': '📰',
+            'weather': '🌤️',
+            'finance': '💰',
+            'social': '👥',
+            'tools': '🛠️',
+            'default': '⚡'
+        };
         
         // Get query from URL
         const params = new URLSearchParams(window.location.search);
         const query = params.get('q') || '';
         document.getElementById('searchInput').value = query;
         
-        // Search on load
-        if (query) {
-            search(query);
-        } else {
-            // Show all endpoints if no query
-            search('');
-        }
+        // Load on start
+        search(query);
         
         // Search form handler
         document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const q = document.getElementById('searchInput').value;
-            window.history.pushState({}, '', `?q=${encodeURIComponent(q)}`);
+            window.history.pushState({}, '', q ? `?q=${encodeURIComponent(q)}` : '/search.html');
             search(q);
         });
         
         // Filter handlers
-        document.querySelectorAll('.filter-btn').forEach(btn => {
+        document.querySelectorAll('.control-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.control-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentFilter = btn.dataset.filter;
                 renderResults();
             });
         });
         
+        // Sort handler
+        document.getElementById('sortSelect').addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            renderResults();
+        });
+        
         async function search(q) {
             const resultsEl = document.getElementById('results');
-            resultsEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Searching endpoints...</p></div>';
+            resultsEl.innerHTML = `
+                <div class="state-container">
+                    <div class="loading-spinner"></div>
+                    <p class="state-title">Searching endpoints...</p>
+                </div>
+            `;
             
             try {
                 const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(q)}`);
@@ -355,49 +652,151 @@
                 allResults = data.results || [];
                 renderResults();
             } catch (err) {
-                resultsEl.innerHTML = `<div class="error"><p>Error connecting to API</p><p style="font-size:0.85rem;margin-top:8px;">${err.message}</p></div>`;
-                document.getElementById('resultCount').textContent = 'Error';
+                resultsEl.innerHTML = `
+                    <div class="state-container">
+                        <p class="state-title">⚠️ Connection Error</p>
+                        <p class="state-description">${escapeHtml(err.message)}</p>
+                    </div>
+                `;
+                document.getElementById('resultCount').textContent = 'Error loading results';
             }
         }
         
         function renderResults() {
             const resultsEl = document.getElementById('results');
             
-            let filtered = allResults;
+            // Filter
+            let filtered = [...allResults];
             if (currentFilter === 'healthy') {
-                filtered = allResults.filter(r => r.health === 'healthy');
+                filtered = filtered.filter(r => r.health === 'healthy');
             } else if (currentFilter === 'tier-a') {
-                filtered = allResults.filter(r => r.tier === 'A');
+                filtered = filtered.filter(r => r.tier === 'A');
             }
             
-            document.getElementById('resultCount').textContent = `${filtered.length} endpoint${filtered.length !== 1 ? 's' : ''} found`;
+            // Sort
+            filtered.sort((a, b) => {
+                switch (currentSort) {
+                    case 'quality':
+                        const tierOrder = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
+                        return (tierOrder[a.tier] || 4) - (tierOrder[b.tier] || 4);
+                    case 'price-low':
+                        return (a.priceUsd || 999) - (b.priceUsd || 999);
+                    case 'price-high':
+                        return (b.priceUsd || 0) - (a.priceUsd || 0);
+                    case 'speed':
+                        return (a.responseTimeMs || 9999) - (b.responseTimeMs || 9999);
+                    case 'name':
+                        return getName(a).localeCompare(getName(b));
+                    default:
+                        return 0;
+                }
+            });
             
+            // Update count
+            const totalCount = allResults.length;
+            const filteredCount = filtered.length;
+            const countText = currentFilter === 'all' 
+                ? `<strong>${totalCount}</strong> endpoints indexed`
+                : `<strong>${filteredCount}</strong> of ${totalCount} endpoints`;
+            document.getElementById('resultCount').innerHTML = countText;
+            
+            // Empty state
             if (filtered.length === 0) {
-                resultsEl.innerHTML = '<div class="no-results"><p>No endpoints found</p><p style="font-size:0.85rem;margin-top:8px;">Try a different search term</p></div>';
+                resultsEl.innerHTML = `
+                    <div class="state-container">
+                        <p class="state-title">No endpoints found</p>
+                        <p class="state-description">Try adjusting your search or filters</p>
+                    </div>
+                `;
                 return;
             }
             
-            resultsEl.innerHTML = filtered.map(r => `
-                <div class="result-card">
-                    <div class="result-header">
-                        <div>
-                            <div class="result-title">${escapeHtml(r.url.split('/').slice(-1)[0] || r.domain)}</div>
-                            <div class="result-domain">${escapeHtml(r.domain)}</div>
+            // Render cards
+            resultsEl.innerHTML = filtered.map(r => {
+                const name = getName(r);
+                const icon = getCategoryIcon(r.category);
+                const tier = r.tier || 'D';
+                const health = r.health || 'unknown';
+                const price = r.priceUsd ? `$${r.priceUsd.toFixed(4)}` : '$?';
+                const responseTime = r.responseTimeMs ? `${r.responseTimeMs}ms` : '—';
+                const uptime = r.uptimePercent ? `${r.uptimePercent.toFixed(0)}%` : '—';
+                
+                return `
+                    <div class="result-card tier-${tier}">
+                        <div class="card-main">
+                            <div class="card-header">
+                                <div class="endpoint-icon">${icon}</div>
+                                <div class="card-titles">
+                                    <div class="endpoint-name">
+                                        <a href="${escapeHtml(r.url)}" target="_blank">${escapeHtml(name)}</a>
+                                        <span class="tier-badge tier-${tier}">TIER ${tier}</span>
+                                    </div>
+                                    <div class="domain-url">${escapeHtml(r.domain || r.url)}</div>
+                                </div>
+                            </div>
+                            
+                            <p class="endpoint-description">${escapeHtml(r.description || 'No description available for this endpoint.')}</p>
+                            
+                            <div class="card-meta">
+                                <div class="meta-item">
+                                    <span class="health-indicator">
+                                        <span class="health-dot ${health}"></span>
+                                        <span class="meta-value">${capitalizeFirst(health)}</span>
+                                    </span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Speed:</span>
+                                    <span class="meta-value">${responseTime}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Uptime:</span>
+                                    <span class="meta-value">${uptime}</span>
+                                </div>
+                                ${r.category ? `<span class="category-tag">${escapeHtml(r.category)}</span>` : ''}
+                            </div>
+                        </div>
+                        
+                        <div class="card-actions">
+                            <div class="price-tag">
+                                <div class="price-amount">${price}</div>
+                                <div class="price-unit">per call</div>
+                            </div>
+                            <a href="${escapeHtml(r.url)}" target="_blank" class="action-btn">
+                                Try Endpoint
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                </svg>
+                            </a>
                         </div>
                     </div>
-                    <div class="result-description">${escapeHtml(r.description || 'No description')}</div>
-                    <div class="result-meta">
-                        <span class="meta-item price">$${r.priceUsd?.toFixed(3) || '?'}/call</span>
-                        <span class="meta-item">
-                            <span class="health-dot health-${r.health || 'unknown'}"></span>
-                            ${r.health || 'unknown'}
-                        </span>
-                        <span class="tier tier-${r.tier || 'D'}">${r.tier || '?'}</span>
-                        <span class="category">${escapeHtml(r.category || 'uncategorized')}</span>
-                        <a href="${escapeHtml(r.url)}" target="_blank" class="try-btn">View →</a>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
+        }
+        
+        function getName(r) {
+            // Try to extract a readable name from the URL
+            const path = r.url?.split('/').filter(Boolean).pop() || '';
+            if (path && path !== r.domain) {
+                // Convert kebab-case or snake_case to Title Case
+                return path
+                    .replace(/[-_]/g, ' ')
+                    .replace(/\b\w/g, c => c.toUpperCase());
+            }
+            return r.domain || 'Unknown Endpoint';
+        }
+        
+        function getCategoryIcon(category) {
+            if (!category) return categoryIcons.default;
+            const key = category.toLowerCase();
+            for (const [cat, icon] of Object.entries(categoryIcons)) {
+                if (key.includes(cat)) return icon;
+            }
+            return categoryIcons.default;
+        }
+        
+        function capitalizeFirst(str) {
+            if (!str) return '';
+            return str.charAt(0).toUpperCase() + str.slice(1);
         }
         
         function escapeHtml(str) {
