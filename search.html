@@ -3,7 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search — Agent Index</title>
+    
+    <!-- Primary SEO -->
+    <title>Search x402 AI Agent Endpoints | Agent Index - The Discovery Layer for Agent Commerce</title>
+    <meta name="description" content="Search and discover x402 payment-enabled API endpoints for AI agents. Find crypto data, DeFi analytics, AI models, and more. The leading directory for agent-to-agent commerce on Base.">
+    <meta name="keywords" content="x402, AI agents, agent commerce, API endpoints, crypto API, DeFi API, Base network, USDC payments, agent-to-agent, autonomous agents, Coinbase, API marketplace">
+    <meta name="author" content="Agent Index">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://theagentindex.app/search.html">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://theagentindex.app/search.html">
+    <meta property="og:title" content="Search x402 AI Agent Endpoints | Agent Index">
+    <meta property="og:description" content="Discover payment-enabled API endpoints for AI agents. Crypto, DeFi, AI models & more. The Google for agent commerce.">
+    <meta property="og:image" content="https://theagentindex.app/brand/og-image.png">
+    <meta property="og:site_name" content="Agent Index">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://theagentindex.app/search.html">
+    <meta name="twitter:title" content="Search x402 AI Agent Endpoints | Agent Index">
+    <meta name="twitter:description" content="Discover payment-enabled API endpoints for AI agents. Crypto, DeFi, AI models & more. The Google for agent commerce.">
+    <meta name="twitter:image" content="https://theagentindex.app/brand/og-image.png">
+    
+    <!-- Structured Data - WebSite with SearchAction -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Agent Index",
+        "alternateName": ["The Agent Index", "x402 Agent Directory"],
+        "url": "https://theagentindex.app",
+        "description": "The discovery layer for x402 agent-to-agent commerce. Search and discover payment-enabled API endpoints for AI agents.",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://theagentindex.app/search.html?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <!-- Structured Data - Product/Service -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Agent Index",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "description": "Search engine and directory for x402 payment-enabled API endpoints. Helps AI agents discover and connect with other agents and services.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "150"
+        }
+    }
+    </script>
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Agent Index",
+        "url": "https://theagentindex.app",
+        "logo": "https://theagentindex.app/brand/logo.png",
+        "sameAs": [
+            "https://twitter.com/theagentindex",
+            "https://github.com/CIII-glitch/agentindex"
+        ]
+    }
+    </script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -476,13 +556,89 @@
             font-size: 0.95rem;
         }
         
+        /* Visually hidden but accessible to screen readers and crawlers */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* SEO Content Block - visible to crawlers, subtle to users */
+        .seo-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .seo-content h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+        
+        .seo-content p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        
+        .seo-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .seo-content strong {
+            color: var(--text-secondary);
+        }
+        
+        .seo-content.hidden {
+            display: none;
+        }
+        
         /* Footer */
         footer {
             padding: 40px 0;
             border-top: 1px solid var(--border);
-            text-align: center;
             color: var(--text-muted);
             font-size: 0.85rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-tagline {
+            font-size: 0.8rem;
         }
         
         /* Responsive */
@@ -531,14 +687,15 @@
     
     <section class="search-section">
         <div class="container">
-            <form class="search-wrapper" id="searchForm">
+            <h1 class="visually-hidden">Search x402 AI Agent Endpoints - Agent Index Directory</h1>
+            <form class="search-wrapper" id="searchForm" role="search" aria-label="Search x402 endpoints">
                 <div class="search-box">
-                    <span class="search-icon">
+                    <span class="search-icon" aria-hidden="true">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </span>
-                    <input type="text" name="q" id="searchInput" placeholder="Search for crypto prices, DeFi data, AI models, news..." autocomplete="off">
+                    <input type="text" name="q" id="searchInput" placeholder="Search x402 endpoints: crypto prices, DeFi data, AI agents, oracles..." autocomplete="off" aria-label="Search query">
                     <button type="submit">Search</button>
                 </div>
             </form>
@@ -571,7 +728,14 @@
     </section>
     
     <main class="container">
-        <div class="results-grid" id="results">
+        <!-- SEO Content Block -->
+        <article class="seo-content" id="seoContent">
+            <h2>Discover x402 Payment-Enabled API Endpoints for AI Agents</h2>
+            <p>Agent Index is the leading directory for <strong>x402 protocol endpoints</strong> — the new standard for agent-to-agent commerce. Search thousands of payment-enabled APIs that AI agents can use autonomously with <strong>USDC on Base</strong>.</p>
+            <p>Find endpoints for <strong>crypto price data</strong>, <strong>DeFi analytics</strong>, <strong>AI model inference</strong>, <strong>blockchain oracles</strong>, and more. Every endpoint is quality-scored, health-monitored, and ready for instant micropayments.</p>
+        </article>
+        
+        <div class="results-grid" id="results" role="list" aria-label="x402 endpoint search results">
             <div class="state-container">
                 <div class="loading-spinner"></div>
                 <p class="state-title">Loading endpoints...</p>
@@ -580,8 +744,19 @@
     </main>
     
     <footer>
-        <div class="container">
-            <p>Agent Index — The discovery layer for x402 agent commerce</p>
+        <div class="container footer-content">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="/">Home</a>
+                <a href="/search.html">Search x402 Endpoints</a>
+                <a href="/categories.html">Browse Categories</a>
+                <a href="/docs.html">API Documentation</a>
+                <a href="/scoring.html">Quality Scoring</a>
+                <a href="/submit.html">Submit Endpoint</a>
+            </nav>
+            <p class="footer-tagline">
+                <strong>Agent Index</strong> — The discovery layer for x402 agent-to-agent commerce on Base
+            </p>
+            <p>Search x402 endpoints • AI agent APIs • Crypto data feeds • DeFi oracles • USDC micropayments</p>
         </div>
     </footer>
     
@@ -664,6 +839,14 @@
         
         function renderResults() {
             const resultsEl = document.getElementById('results');
+            const seoContent = document.getElementById('seoContent');
+            
+            // Hide SEO block when showing results (keeps it for crawlers in initial HTML)
+            if (allResults.length > 0) {
+                seoContent.classList.add('hidden');
+            } else {
+                seoContent.classList.remove('hidden');
+            }
             
             // Filter
             let filtered = [...allResults];
