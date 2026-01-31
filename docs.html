@@ -467,65 +467,6 @@ Content-Type: application/json
             </div>
         </div>
         
-        <h2>SDKs & Integrations</h2>
-        <p>Use Agent Index from your favorite environment:</p>
-        
-        <h3>📦 Node.js / TypeScript</h3>
-        <pre>npm install agentindex-sdk</pre>
-        <pre>import { AgentIndex } from 'agentindex-sdk';
-
-const client = new AgentIndex();
-const results = await client.search({ query: 'crypto prices' });
-console.log(results);</pre>
-        
-        <h3>🐍 Python</h3>
-        <pre>pip install agentindex</pre>
-        <pre>from agentindex import AgentIndex
-
-client = AgentIndex()
-results = client.search("crypto prices")
-print(results)</pre>
-        
-        <h3>🤖 Claude Desktop (MCP)</h3>
-        <pre>npm install -g agentindex-mcp</pre>
-        <p>Add to <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>:</p>
-        <pre>{
-  "mcpServers": {
-    "agentindex": {
-      "command": "agentindex-mcp"
-    }
-  }
-}</pre>
-        <p>Then ask Claude: <em>"Search Agent Index for weather APIs"</em></p>
-        
-        <h3>🎭 Eliza Framework</h3>
-        <pre>npm install agentindex-eliza-plugin</pre>
-        <pre>import { agentIndexPlugin } from 'agentindex-eliza-plugin';
-
-// Add to your Eliza agent plugins
-plugins: [agentIndexPlugin]</pre>
-        
-        <h3>🦜 LangChain</h3>
-        <pre>import { createLangChainTool } from 'agentindex-sdk';
-
-const tool = createLangChainTool();
-// Use with any LangChain agent</pre>
-        
-        <h3>💻 cURL</h3>
-        <pre># Search for crypto endpoints
-curl "https://api.theagentindex.app/search?q=crypto&limit=5"
-
-# Get all categories
-curl "https://api.theagentindex.app/categories"
-
-# Get trending (free preview)
-curl "https://api.theagentindex.app/trending?limit=5"
-
-# Check wallet USDC balance
-curl "https://api.theagentindex.app/verify/0xYourWalletAddress"</pre>
-        
-        <p style="margin-top: 24px;">See <a href="/guides/langchain.html">LangChain Guide</a> and <a href="/guides/crewai.html">CrewAI Guide</a> for full examples. Download the <a href="/agentindex.postman_collection.json">Postman Collection</a>.</p>
-        
         <h2>Using x402 Payments</h2>
         <p>To call premium endpoints, use the <code>@x402/fetch</code> SDK:</p>
         <pre>import { wrapFetchWithPayment } from '@x402/fetch';
@@ -551,43 +492,28 @@ const data = await response.json();</pre>
         <strong>Asset:</strong> USDC (0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)<br>
         <strong>Facilitator:</strong> Coinbase CDP</p>
         
-        <h2>Deploy Your Agent</h2>
-        <p>Ready to build with the Agent Index API? Here's the infrastructure stack we recommend:</p>
+        <h2>Deploy Your Own x402 Endpoint</h2>
+        <p>Want to monetize your API with x402 payments? Here's how to get started:</p>
         
-        <div style="display: grid; gap: 16px; margin: 24px 0;">
-            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <strong>Railway</strong> — <span style="color: var(--text-muted);">Modern Heroku alternative. Deploy Node.js/Python agents in minutes.</span><br>
-                    <span style="color: var(--green); font-size: 0.85rem;">🎁 $20 free credit for new accounts</span>
-                </div>
-                <a href="https://railway.app?utm_source=agentindex&utm_medium=docs&utm_campaign=affiliate" target="_blank" style="background: var(--accent); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500; white-space: nowrap;">Get $20 Free →</a>
-            </div>
-            
-            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <strong>Supabase</strong> — <span style="color: var(--text-muted);">Postgres + Auth + Real-time. Perfect for agent state and data.</span><br>
-                    <span style="color: var(--green); font-size: 0.85rem;">🎁 2 free projects with 500MB database each</span>
-                </div>
-                <a href="https://supabase.com?utm_source=agentindex&utm_medium=docs&utm_campaign=affiliate" target="_blank" style="background: var(--accent); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500; white-space: nowrap;">Start Free →</a>
-            </div>
-            
-            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <strong>DigitalOcean</strong> — <span style="color: var(--text-muted);">Reliable VPS hosting. Great for long-running agents.</span><br>
-                    <span style="color: var(--green); font-size: 0.85rem;">🎁 $200 free credit for 60 days</span>
-                </div>
-                <a href="https://www.digitalocean.com?utm_source=agentindex&utm_medium=docs&utm_campaign=affiliate" target="_blank" style="background: var(--accent); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500; white-space: nowrap;">Get $200 Credit →</a>
-            </div>
-            
-            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <strong>Coinbase</strong> — <span style="color: var(--text-muted);">Get USDC to make x402 API calls. Fiat on-ramp to Base.</span>
-                </div>
-                <a href="https://www.coinbase.com?utm_source=agentindex&utm_medium=docs&utm_campaign=affiliate" target="_blank" style="background: var(--accent); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500; white-space: nowrap;">Get USDC →</a>
-            </div>
-        </div>
+        <h3>1. Choose a Hosting Provider</h3>
+        <p>Your x402 service needs reliable, low-latency hosting. Recommended options:</p>
+        <ul style="color: var(--text-muted); margin-left: 20px; margin-bottom: 16px;">
+            <li><strong><a href="https://railway.app?referralCode=K1NAm9" target="_blank" style="color: var(--accent);">Railway</a></strong> — One-click deploys from GitHub. Free tier + pay-as-you-go. Perfect for Node.js x402 services.</li>
+            <li><strong><a href="https://www.digitalocean.com/?refcode=63e89b799d00&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge" target="_blank" style="color: var(--accent);">DigitalOcean</a></strong> — $200 free credit for new users. App Platform or Droplets for full control.</li>
+        </ul>
         
-        <p style="color: var(--text-muted); font-size: 0.85rem;">See our full <a href="/stack.html" style="color: var(--accent);">AI Agent Stack</a> for more recommended tools.</p>
+        <h3>2. Add x402 Payment Handling</h3>
+        <p>Use the official x402 middleware to add payment verification:</p>
+        <pre>import { x402Middleware } from '@x402/server';
+
+app.use('/api/premium/*', x402Middleware({
+  price: 0.01,           // $0.01 per call
+  network: 'base-mainnet',
+  wallet: '0xYourWallet...'
+}));</pre>
+        
+        <h3>3. Submit to Agent Index</h3>
+        <p>Once deployed, <a href="/submit.html" style="color: var(--accent);">submit your endpoint</a> to get discovered by AI agents worldwide.</p>
     </main>
     
     <footer>
