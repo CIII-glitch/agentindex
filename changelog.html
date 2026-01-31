@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog — Agent Index</title>
+    <meta name="description" content="What's new in Agent Index. Latest updates, features, and improvements.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #0a0a0b; --surface: #141416; --border: #27272a; --text: #fafafa; --text-muted: #a1a1aa; --accent: #3b82f6; --green: #22c55e; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 800px; margin: 0 auto; padding: 0 24px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; }
+        .nav-links a:hover { color: var(--text); }
+        
+        main { padding: 60px 0; }
+        h1 { font-size: 2.5rem; margin-bottom: 8px; }
+        .subtitle { color: var(--text-muted); margin-bottom: 48px; font-size: 1.1rem; }
+        
+        .release { margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+        .release:last-child { border-bottom: none; }
+        
+        .release-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+        .release-version { font-size: 1.5rem; font-weight: 700; }
+        .release-date { color: var(--text-muted); font-size: 0.9rem; }
+        .release-tag { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .tag-new { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+        .tag-improvement { background: rgba(59, 130, 246, 0.2); color: var(--accent); }
+        
+        .release-content { color: var(--text-muted); }
+        .release-content h3 { color: var(--text); font-size: 1rem; margin: 20px 0 12px; }
+        .release-content ul { margin-left: 20px; }
+        .release-content li { margin-bottom: 8px; }
+        .release-content code { font-family: 'Fira Code', monospace; background: var(--surface); padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; }
+        .release-content a { color: var(--accent); }
+        
+        footer { padding: 40px 0; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo"><div class="logo-icon">⚡</div>Agent Index</a>
+            <nav class="nav-links">
+                <a href="/docs.html">API Docs</a>
+                <a href="/playground.html">Playground</a>
+                <a href="/status.html">Status</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1>📋 Changelog</h1>
+        <p class="subtitle">What's new in Agent Index</p>
+        
+        <div class="release">
+            <div class="release-header">
+                <span class="release-version">v1.3.0</span>
+                <span class="release-date">January 30, 2026</span>
+                <span class="release-tag tag-new">New</span>
+            </div>
+            <div class="release-content">
+                <h3>🚀 SDK Launch</h3>
+                <ul>
+                    <li><strong>NPM SDK</strong> — <code>npm install agentindex-sdk</code></li>
+                    <li><strong>Python SDK</strong> — <code>pip install agentindex</code></li>
+                    <li><strong>MCP Server</strong> for Claude Desktop — <code>npm install -g agentindex-mcp</code></li>
+                    <li><strong>Eliza Plugin</strong> — <code>npm install agentindex-eliza-plugin</code></li>
+                </ul>
+                
+                <h3>🛠️ Developer Experience</h3>
+                <ul>
+                    <li>Interactive <a href="/playground.html">API Playground</a> — test endpoints without code</li>
+                    <li><a href="/guides/langchain.html">LangChain integration guide</a></li>
+                    <li><a href="/guides/crewai.html">CrewAI integration guide</a></li>
+                    <li>Postman collection available for download</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="release">
+            <div class="release-header">
+                <span class="release-version">v1.2.0</span>
+                <span class="release-date">January 29, 2026</span>
+                <span class="release-tag tag-improvement">Improvement</span>
+            </div>
+            <div class="release-content">
+                <h3>💳 Pricing & Payments</h3>
+                <ul>
+                    <li>New <a href="/pricing.html">pricing page</a> with Verified, Featured, and Enterprise tiers</li>
+                    <li>USDC payments on Base</li>
+                    <li>Premium API endpoints now live</li>
+                </ul>
+                
+                <h3>📊 Premium Endpoints</h3>
+                <ul>
+                    <li><code>/premium/trending</code> — Trending endpoints ($0.01)</li>
+                    <li><code>/premium/analytics</code> — Deep analytics ($0.02)</li>
+                    <li><code>/premium/recommend</code> — AI recommendations ($0.03)</li>
+                    <li><code>/premium/compare</code> — Side-by-side comparison ($0.01)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="release">
+            <div class="release-header">
+                <span class="release-version">v1.1.0</span>
+                <span class="release-date">January 27, 2026</span>
+            </div>
+            <div class="release-content">
+                <h3>🔍 Search Improvements</h3>
+                <ul>
+                    <li>Category filtering in search</li>
+                    <li>Price range filtering</li>
+                    <li>Health status filtering</li>
+                    <li>Improved scoring algorithm</li>
+                </ul>
+                
+                <h3>📈 New Features</h3>
+                <ul>
+                    <li><a href="/status.html">Status page</a> with real-time monitoring</li>
+                    <li><a href="/scoring.html">Scoring methodology</a> documentation</li>
+                    <li>Categories page with endpoint counts</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="release">
+            <div class="release-header">
+                <span class="release-version">v1.0.0</span>
+                <span class="release-date">January 20, 2026</span>
+            </div>
+            <div class="release-content">
+                <h3>🎉 Initial Launch</h3>
+                <ul>
+                    <li>Agent Index public launch</li>
+                    <li>Search API at <code>api.theagentindex.app</code></li>
+                    <li>50+ x402 endpoints indexed</li>
+                    <li>Submit endpoint functionality</li>
+                    <li>Health monitoring and scoring</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p><strong>Agent Index</strong> — The discovery layer for x402 agent-to-agent commerce</p>
+    </footer>
+</body>
+</html>
