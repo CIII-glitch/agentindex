@@ -467,6 +467,52 @@ Content-Type: application/json
             </div>
         </div>
         
+        <h2>SDKs & Integrations</h2>
+        <p>Use Agent Index from your favorite environment:</p>
+        
+        <h3>📦 Node.js / TypeScript</h3>
+        <pre>npm install agentindex-sdk</pre>
+        <pre>import { AgentIndex } from 'agentindex-sdk';
+
+const client = new AgentIndex();
+const results = await client.search({ query: 'crypto prices' });
+console.log(results);</pre>
+        
+        <h3>🐍 Python</h3>
+        <pre>pip install agentindex</pre>
+        <pre>from agentindex import AgentIndex
+
+client = AgentIndex()
+results = client.search("crypto prices")
+print(results)</pre>
+        
+        <h3>🤖 Claude Desktop (MCP)</h3>
+        <pre>npm install -g agentindex-mcp</pre>
+        <p>Add to <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>:</p>
+        <pre>{
+  "mcpServers": {
+    "agentindex": {
+      "command": "agentindex-mcp"
+    }
+  }
+}</pre>
+        <p>Then ask Claude: <em>"Search Agent Index for weather APIs"</em></p>
+        
+        <h3>🎭 Eliza Framework</h3>
+        <pre>npm install agentindex-eliza-plugin</pre>
+        <pre>import { agentIndexPlugin } from 'agentindex-eliza-plugin';
+
+// Add to your Eliza agent plugins
+plugins: [agentIndexPlugin]</pre>
+        
+        <h3>🦜 LangChain</h3>
+        <pre>import { createLangChainTool } from 'agentindex-sdk';
+
+const tool = createLangChainTool();
+// Use with any LangChain agent</pre>
+        
+        <p style="margin-top: 24px;">See <a href="/guides/langchain.html">LangChain Guide</a> and <a href="/guides/crewai.html">CrewAI Guide</a> for full examples.</p>
+        
         <h2>Using x402 Payments</h2>
         <p>To call premium endpoints, use the <code>@x402/fetch</code> SDK:</p>
         <pre>import { wrapFetchWithPayment } from '@x402/fetch';
