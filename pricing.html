@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO -->
+    <title>Pricing — Agent Index | List Your x402 Endpoint</title>
+    <meta name="description" content="Free to list. Get verified for trust. Get featured for visibility. Simple, transparent pricing for x402 agent services.">
+    <meta name="keywords" content="x402 pricing, agent listing, API directory pricing, agent index plans">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://theagentindex.app/pricing.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://theagentindex.app/pricing.html">
+    <meta property="og:title" content="Pricing — Agent Index">
+    <meta property="og:description" content="Free to list your x402 endpoint. Premium tiers for verification and visibility.">
+    <meta property="og:image" content="https://theagentindex.app/brand/og-image.png">
+    <meta property="og:site_name" content="Agent Index">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@theagentindex">
+    <meta name="twitter:title" content="Pricing — Agent Index">
+    <meta name="twitter:description" content="Free to list. Premium tiers for trust and visibility.">
+    <meta name="twitter:image" content="https://theagentindex.app/brand/og-image.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { 
+            --bg: #0a0a0b; 
+            --surface: #141416; 
+            --border: #27272a; 
+            --text: #fafafa; 
+            --text-muted: #a1a1aa; 
+            --accent: #3b82f6; 
+            --accent-hover: #2563eb; 
+            --green: #22c55e;
+            --purple: #a855f7;
+            --gold: #eab308;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        
+        /* Header */
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        
+        /* Hero */
+        .hero { text-align: center; padding: 80px 0 60px; }
+        .hero h1 { font-size: 3rem; margin-bottom: 16px; }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+        
+        /* Payment Toggle */
+        .payment-toggle { display: flex; justify-content: center; margin-bottom: 48px; }
+        .toggle-group { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px; display: flex; gap: 4px; }
+        .toggle-btn { padding: 10px 24px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted); font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }
+        .toggle-btn.active { background: var(--accent); color: white; }
+        .toggle-btn:hover:not(.active) { color: var(--text); }
+        
+        /* Pricing Grid */
+        .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 60px; }
+        @media (max-width: 1024px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .pricing-grid { grid-template-columns: 1fr; } }
+        
+        .pricing-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s, transform 0.2s; }
+        .pricing-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .pricing-card.highlight { border-color: var(--accent); box-shadow: 0 0 30px rgba(59, 130, 246, 0.15); }
+        .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+        
+        .tier-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+        .tier-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+        .price { font-size: 2.5rem; font-weight: 700; margin-bottom: 24px; }
+        .price span { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
+        
+        .features { list-style: none; margin-bottom: 32px; flex-grow: 1; }
+        .features li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.9rem; color: var(--text-muted); }
+        .features li::before { content: "✓"; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+        
+        .cta-btn { width: 100%; padding: 14px; border-radius: 10px; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none; text-align: center; display: block; }
+        .cta-btn.primary { background: var(--accent); color: white; }
+        .cta-btn.primary:hover { background: var(--accent-hover); }
+        .cta-btn.secondary { background: var(--border); color: var(--text); }
+        .cta-btn.secondary:hover { background: #333; }
+        
+        /* Crypto Section */
+        .crypto-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px; text-align: center; max-width: 600px; margin: 0 auto 60px; display: none; }
+        .crypto-section.show { display: block; }
+        .crypto-section h3 { font-size: 1.5rem; margin-bottom: 16px; }
+        .crypto-section p { color: var(--text-muted); margin-bottom: 24px; }
+        .wallet-address { background: var(--bg); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+        .wallet-address code { color: var(--accent); font-size: 0.85rem; word-break: break-all; }
+        .copy-btn { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 0.9rem; }
+        .copy-btn:hover { text-decoration: underline; }
+        
+        /* Email Section */
+        .email-section { background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 48px; text-align: center; max-width: 600px; margin: 0 auto 60px; }
+        .email-section h3 { font-size: 1.5rem; margin-bottom: 12px; }
+        .email-section p { color: var(--text-muted); margin-bottom: 24px; }
+        .email-form { display: flex; gap: 12px; max-width: 400px; margin: 0 auto; }
+        .email-form input { flex-grow: 1; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 1rem; }
+        .email-form input:focus { outline: none; border-color: var(--accent); }
+        .email-form button { padding: 14px 24px; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .email-form button:hover { background: var(--accent-hover); }
+        .success-msg { color: var(--green); font-weight: 600; display: none; }
+        
+        /* FAQ */
+        .faq { max-width: 700px; margin: 0 auto 80px; }
+        .faq h2 { text-align: center; margin-bottom: 32px; font-size: 1.75rem; }
+        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; }
+        .faq-item h3 { font-size: 1rem; margin-bottom: 8px; }
+        .faq-item p { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
+        
+        /* Footer */
+        footer { border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .email-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo"><div class="logo-icon">🔍</div>Agent Index</a>
+            <nav class="nav-links">
+                <a href="/search.html">Search</a>
+                <a href="/categories.html">Categories</a>
+                <a href="/docs.html">API Docs</a>
+                <a href="/pricing.html" class="active">Pricing</a>
+                <a href="/submit.html">List Service</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Simple, Transparent Pricing</h1>
+            <p>Free to list. Get verified for trust. Get featured for visibility.</p>
+        </section>
+
+        <div class="payment-toggle">
+            <div class="toggle-group">
+                <button class="toggle-btn active" onclick="showCard()">💳 Card</button>
+                <button class="toggle-btn" onclick="showCrypto()">🔵 USDC (Base)</button>
+            </div>
+        </div>
+
+        <div class="pricing-grid" id="card-pricing">
+            <!-- Free -->
+            <div class="pricing-card">
+                <div class="tier-name">Free</div>
+                <div class="tier-desc">Get listed and discovered</div>
+                <div class="price">$0<span>/forever</span></div>
+                <ul class="features">
+                    <li>Basic listing in directory</li>
+                    <li>Automatic health monitoring</li>
+                    <li>Quality score tracking</li>
+                    <li>API endpoint indexing</li>
+                    <li>Community support</li>
+                </ul>
+                <a href="/submit.html" class="cta-btn secondary">List for Free</a>
+            </div>
+
+            <!-- Verified -->
+            <div class="pricing-card">
+                <div class="tier-name" style="color: var(--green);">✓ Verified</div>
+                <div class="tier-desc">Build trust with verification</div>
+                <div class="price">$9<span>/month</span></div>
+                <ul class="features">
+                    <li>Everything in Free</li>
+                    <li>Verified badge on listing</li>
+                    <li>Manual quality review</li>
+                    <li>Priority in search results</li>
+                    <li>Email support</li>
+                </ul>
+                <a href="https://buy.stripe.com/test_xxx" class="cta-btn secondary" id="verified-btn">Get Verified</a>
+            </div>
+
+            <!-- Featured -->
+            <div class="pricing-card highlight">
+                <div class="popular-badge">Most Popular</div>
+                <div class="tier-name" style="color: var(--gold);">⭐ Featured</div>
+                <div class="tier-desc">Maximum visibility</div>
+                <div class="price">$29<span>/month</span></div>
+                <ul class="features">
+                    <li>Everything in Verified</li>
+                    <li>Featured placement on homepage</li>
+                    <li>Top placement in category</li>
+                    <li>Featured badge on listing</li>
+                    <li>Analytics dashboard</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="https://buy.stripe.com/test_xxx" class="cta-btn primary" id="featured-btn">Get Featured</a>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="pricing-card">
+                <div class="tier-name" style="color: var(--purple);">🏢 Enterprise</div>
+                <div class="tier-desc">For large deployments</div>
+                <div class="price">$99<span>/month</span></div>
+                <ul class="features">
+                    <li>Everything in Featured</li>
+                    <li>Multiple endpoint listings</li>
+                    <li>Custom branding options</li>
+                    <li>API access for management</li>
+                    <li>Dedicated account manager</li>
+                    <li>SLA guarantee</li>
+                </ul>
+                <a href="mailto:carlos@theagentindex.app?subject=Enterprise Plan" class="cta-btn secondary">Contact Sales</a>
+            </div>
+        </div>
+
+        <div class="crypto-section" id="crypto-section">
+            <h3>Pay with USDC on Base 🔵</h3>
+            <p>Send USDC to our payment address. After payment, email us with your transaction hash to activate your plan.</p>
+            <div class="wallet-address">
+                <small style="color: var(--text-muted); display: block; margin-bottom: 8px;">Payment Address (Base Network)</small>
+                <code id="wallet-address">0x1234567890123456789012345678901234567890</code>
+            </div>
+            <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
+            <p style="margin-top: 24px; font-size: 0.85rem;">
+                <strong>Verified:</strong> $9 USDC | <strong>Featured:</strong> $29 USDC | <strong>Enterprise:</strong> $99 USDC
+            </p>
+        </div>
+
+        <div class="email-section">
+            <h3>Stay Updated</h3>
+            <p>Get notified about new features, top agents, and platform updates.</p>
+            <form class="email-form" id="email-form" onsubmit="submitEmail(event)">
+                <input type="email" placeholder="your@email.com" required id="email-input">
+                <button type="submit">Subscribe</button>
+            </form>
+            <p class="success-msg" id="success-msg">✓ You're on the list!</p>
+        </div>
+
+        <section class="faq">
+            <h2>Questions?</h2>
+            <div class="faq-item">
+                <h3>What do I get with the free tier?</h3>
+                <p>Your endpoint is listed in our directory, gets automatic health monitoring, and appears in search results. It's truly free — no credit card required.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What's the Verified badge?</h3>
+                <p>We manually review your endpoint for quality, uptime, and proper x402 implementation. The badge tells users your service is trustworthy.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How does Featured placement work?</h3>
+                <p>Featured endpoints appear at the top of search results and on the homepage. It's the best way to get discovered by AI agents.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Can I pay with crypto?</h3>
+                <p>Yes! We accept USDC on Base. Click the USDC tab above to see our payment address. Email us after payment with your tx hash.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Agent Index — The x402 Agent Directory 🔍</p>
+    </footer>
+
+    <script>
+        function showCard() {
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.toggle-btn')[0].classList.add('active');
+            document.getElementById('card-pricing').style.display = 'grid';
+            document.getElementById('crypto-section').classList.remove('show');
+        }
+
+        function showCrypto() {
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.toggle-btn')[1].classList.add('active');
+            document.getElementById('crypto-section').classList.add('show');
+        }
+
+        function copyAddress() {
+            const address = document.getElementById('wallet-address').textContent;
+            navigator.clipboard.writeText(address);
+            alert('Address copied!');
+        }
+
+        async function submitEmail(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value;
+            
+            try {
+                // For static site, we'll use a simple endpoint or store locally
+                // In production, this would call an API
+                console.log('Email submitted:', email);
+                localStorage.setItem('subscribed_email', email);
+                
+                document.getElementById('email-form').style.display = 'none';
+                document.getElementById('success-msg').style.display = 'block';
+            } catch (err) {
+                console.error('Error:', err);
+            }
+        }
+    </script>
+</body>
+</html>
