@@ -511,7 +511,20 @@ plugins: [agentIndexPlugin]</pre>
 const tool = createLangChainTool();
 // Use with any LangChain agent</pre>
         
-        <p style="margin-top: 24px;">See <a href="/guides/langchain.html">LangChain Guide</a> and <a href="/guides/crewai.html">CrewAI Guide</a> for full examples.</p>
+        <h3>💻 cURL</h3>
+        <pre># Search for crypto endpoints
+curl "https://api.theagentindex.app/search?q=crypto&limit=5"
+
+# Get all categories
+curl "https://api.theagentindex.app/categories"
+
+# Get trending (free preview)
+curl "https://api.theagentindex.app/trending?limit=5"
+
+# Check wallet USDC balance
+curl "https://api.theagentindex.app/verify/0xYourWalletAddress"</pre>
+        
+        <p style="margin-top: 24px;">See <a href="/guides/langchain.html">LangChain Guide</a> and <a href="/guides/crewai.html">CrewAI Guide</a> for full examples. Download the <a href="/agentindex.postman_collection.json">Postman Collection</a>.</p>
         
         <h2>Using x402 Payments</h2>
         <p>To call premium endpoints, use the <code>@x402/fetch</code> SDK:</p>
