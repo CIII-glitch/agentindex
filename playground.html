@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Playground — Agent Index</title>
+    <meta name="description" content="Try the Agent Index API live. Search for x402 endpoints, get trending agents, and test API calls without writing code.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #0a0a0b; --surface: #141416; --surface2: #1a1a1d; --border: #27272a; --text: #fafafa; --text-muted: #a1a1aa; --accent: #3b82f6; --green: #22c55e; --yellow: #eab308; --red: #ef4444; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        
+        main { padding: 40px 0; }
+        h1 { font-size: 2rem; margin-bottom: 8px; }
+        .subtitle { color: var(--text-muted); margin-bottom: 32px; }
+        
+        .playground { display: grid; grid-template-columns: 350px 1fr; gap: 24px; }
+        @media (max-width: 900px) { .playground { grid-template-columns: 1fr; } }
+        
+        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--border); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .panel-body { padding: 20px; }
+        
+        .endpoint-selector { margin-bottom: 16px; }
+        .endpoint-btn { width: 100%; padding: 12px 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); cursor: pointer; text-align: left; margin-bottom: 8px; transition: all 0.15s; display: flex; justify-content: space-between; align-items: center; }
+        .endpoint-btn:hover { border-color: var(--accent); }
+        .endpoint-btn.active { border-color: var(--accent); background: rgba(59, 130, 246, 0.1); }
+        .endpoint-btn .method { font-family: 'Fira Code', monospace; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; background: rgba(34, 197, 94, 0.2); color: var(--green); }
+        .endpoint-btn .path { font-family: 'Fira Code', monospace; font-size: 0.9rem; }
+        .endpoint-btn .price { font-size: 0.8rem; color: var(--yellow); }
+        .endpoint-btn .free { color: var(--green); }
+        
+        .params-section { margin-top: 20px; }
+        .params-section h3 { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .param-row { margin-bottom: 12px; }
+        .param-row label { display: block; font-size: 0.85rem; margin-bottom: 4px; color: var(--text-muted); }
+        .param-row input, .param-row select { width: 100%; padding: 10px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.9rem; }
+        .param-row input:focus, .param-row select:focus { outline: none; border-color: var(--accent); }
+        
+        .run-btn { width: 100%; padding: 14px; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; margin-top: 20px; transition: opacity 0.15s; }
+        .run-btn:hover { opacity: 0.9; }
+        .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .response-panel { display: flex; flex-direction: column; min-height: 500px; }
+        .response-panel .panel-body { flex: 1; display: flex; flex-direction: column; }
+        
+        .request-preview { background: var(--surface2); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--green); overflow-x: auto; }
+        
+        .response-meta { display: flex; gap: 16px; margin-bottom: 12px; font-size: 0.85rem; }
+        .response-meta .status { padding: 4px 10px; border-radius: 4px; font-weight: 500; }
+        .response-meta .status.success { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+        .response-meta .status.error { background: rgba(239, 68, 68, 0.2); color: var(--red); }
+        .response-meta .time { color: var(--text-muted); }
+        
+        .response-body { flex: 1; background: var(--surface2); border-radius: 8px; padding: 16px; font-family: 'Fira Code', monospace; font-size: 0.8rem; overflow: auto; white-space: pre-wrap; word-break: break-word; }
+        .response-body.empty { display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-family: 'Inter', sans-serif; }
+        
+        .copy-btn { position: absolute; top: 8px; right: 8px; padding: 6px 10px; background: var(--border); border: none; border-radius: 4px; color: var(--text-muted); cursor: pointer; font-size: 0.75rem; }
+        .copy-btn:hover { background: var(--accent); color: white; }
+        
+        .response-wrapper { position: relative; flex: 1; display: flex; flex-direction: column; }
+        
+        footer { padding: 40px 0; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo"><div class="logo-icon">⚡</div>Agent Index</a>
+            <nav class="nav-links">
+                <a href="/categories.html">Categories</a>
+                <a href="/docs.html">API Docs</a>
+                <a href="/playground.html" class="active">Playground</a>
+                <a href="/submit.html">Submit</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1>🧪 API Playground</h1>
+        <p class="subtitle">Try the Agent Index API live — no code required</p>
+        
+        <div class="playground">
+            <div class="panel">
+                <div class="panel-header">📡 Endpoints</div>
+                <div class="panel-body">
+                    <div class="endpoint-selector" id="endpoints">
+                        <button class="endpoint-btn active" data-endpoint="search" data-method="GET" data-path="/api/search">
+                            <span><span class="method">GET</span> <span class="path">/search</span></span>
+                            <span class="price free">FREE</span>
+                        </button>
+                        <button class="endpoint-btn" data-endpoint="categories" data-method="GET" data-path="/api/categories">
+                            <span><span class="method">GET</span> <span class="path">/categories</span></span>
+                            <span class="price free">FREE</span>
+                        </button>
+                        <button class="endpoint-btn" data-endpoint="stats" data-method="GET" data-path="/api/stats">
+                            <span><span class="method">GET</span> <span class="path">/stats</span></span>
+                            <span class="price free">FREE</span>
+                        </button>
+                        <button class="endpoint-btn" data-endpoint="trending" data-method="GET" data-path="/api/premium/trending">
+                            <span><span class="method">GET</span> <span class="path">/premium/trending</span></span>
+                            <span class="price">$0.01</span>
+                        </button>
+                        <button class="endpoint-btn" data-endpoint="analytics" data-method="GET" data-path="/api/premium/analytics">
+                            <span><span class="method">GET</span> <span class="path">/premium/analytics</span></span>
+                            <span class="price">$0.02</span>
+                        </button>
+                    </div>
+                    
+                    <div class="params-section" id="params-section">
+                        <h3>Parameters</h3>
+                        <div id="params-container">
+                            <!-- Dynamic params go here -->
+                        </div>
+                    </div>
+                    
+                    <button class="run-btn" id="run-btn">▶ Run Request</button>
+                </div>
+            </div>
+            
+            <div class="panel response-panel">
+                <div class="panel-header">📨 Response</div>
+                <div class="panel-body">
+                    <div class="request-preview" id="request-preview">GET https://api.theagentindex.app/search?q=crypto</div>
+                    
+                    <div class="response-meta" id="response-meta" style="display: none;">
+                        <span class="status success" id="response-status">200 OK</span>
+                        <span class="time" id="response-time">123ms</span>
+                    </div>
+                    
+                    <div class="response-wrapper">
+                        <div class="response-body empty" id="response-body">Click "Run Request" to see results</div>
+                        <button class="copy-btn" id="copy-btn" style="display: none;">📋 Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p><strong>Agent Index</strong> — The discovery layer for x402 agent-to-agent commerce</p>
+    </footer>
+    
+    <script>
+        const API_BASE = 'https://api.theagentindex.app';
+        
+        const endpointConfigs = {
+            search: {
+                params: [
+                    { name: 'q', label: 'Search Query', type: 'text', placeholder: 'crypto, weather, ai...', default: 'crypto' },
+                    { name: 'category', label: 'Category (optional)', type: 'text', placeholder: 'ai/ml, crypto-data, defi...' },
+                    { name: 'maxPrice', label: 'Max Price USD (optional)', type: 'number', placeholder: '0.05' },
+                    { name: 'limit', label: 'Limit', type: 'number', placeholder: '20', default: '10' }
+                ]
+            },
+            categories: { params: [] },
+            stats: { params: [] },
+            trending: {
+                params: [
+                    { name: 'limit', label: 'Limit', type: 'number', placeholder: '10', default: '10' }
+                ],
+                premium: true
+            },
+            analytics: {
+                params: [],
+                premium: true
+            }
+        };
+        
+        let selectedEndpoint = 'search';
+        let lastResponse = null;
+        
+        // Endpoint selection
+        document.querySelectorAll('.endpoint-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.endpoint-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedEndpoint = btn.dataset.endpoint;
+                renderParams();
+                updatePreview();
+            });
+        });
+        
+        function renderParams() {
+            const config = endpointConfigs[selectedEndpoint];
+            const container = document.getElementById('params-container');
+            const section = document.getElementById('params-section');
+            
+            if (!config.params.length) {
+                section.style.display = 'none';
+                return;
+            }
+            
+            section.style.display = 'block';
+            container.innerHTML = config.params.map(p => `
+                <div class="param-row">
+                    <label>${p.label}</label>
+                    <input type="${p.type}" id="param-${p.name}" placeholder="${p.placeholder || ''}" value="${p.default || ''}" oninput="updatePreview()">
+                </div>
+            `).join('');
+        }
+        
+        function buildUrl() {
+            const btn = document.querySelector('.endpoint-btn.active');
+            const path = btn.dataset.path;
+            const config = endpointConfigs[selectedEndpoint];
+            
+            const params = new URLSearchParams();
+            config.params.forEach(p => {
+                const el = document.getElementById(`param-${p.name}`);
+                if (el && el.value) {
+                    params.set(p.name, el.value);
+                }
+            });
+            
+            const queryString = params.toString();
+            return `${API_BASE}${path}${queryString ? '?' + queryString : ''}`;
+        }
+        
+        function updatePreview() {
+            const btn = document.querySelector('.endpoint-btn.active');
+            const url = buildUrl();
+            document.getElementById('request-preview').textContent = `${btn.dataset.method} ${url}`;
+        }
+        
+        async function runRequest() {
+            const btn = document.getElementById('run-btn');
+            const responseBody = document.getElementById('response-body');
+            const responseMeta = document.getElementById('response-meta');
+            const responseStatus = document.getElementById('response-status');
+            const responseTime = document.getElementById('response-time');
+            const copyBtn = document.getElementById('copy-btn');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ Loading...';
+            responseBody.className = 'response-body';
+            responseBody.textContent = 'Loading...';
+            
+            const url = buildUrl();
+            const start = Date.now();
+            
+            try {
+                const response = await fetch(url);
+                const elapsed = Date.now() - start;
+                const data = await response.json();
+                lastResponse = JSON.stringify(data, null, 2);
+                
+                responseMeta.style.display = 'flex';
+                responseStatus.textContent = `${response.status} ${response.statusText}`;
+                responseStatus.className = `status ${response.ok ? 'success' : 'error'}`;
+                responseTime.textContent = `${elapsed}ms`;
+                
+                responseBody.textContent = lastResponse;
+                copyBtn.style.display = 'block';
+            } catch (err) {
+                responseMeta.style.display = 'flex';
+                responseStatus.textContent = 'Error';
+                responseStatus.className = 'status error';
+                responseTime.textContent = `${Date.now() - start}ms`;
+                
+                responseBody.textContent = `Error: ${err.message}`;
+                lastResponse = null;
+                copyBtn.style.display = 'none';
+            }
+            
+            btn.disabled = false;
+            btn.textContent = '▶ Run Request';
+        }
+        
+        document.getElementById('run-btn').addEventListener('click', runRequest);
+        
+        document.getElementById('copy-btn').addEventListener('click', () => {
+            if (lastResponse) {
+                navigator.clipboard.writeText(lastResponse);
+                document.getElementById('copy-btn').textContent = '✅ Copied!';
+                setTimeout(() => {
+                    document.getElementById('copy-btn').textContent = '📋 Copy';
+                }, 1500);
+            }
+        });
+        
+        // Initialize
+        renderParams();
+        updatePreview();
+    </script>
+</body>
+</html>
