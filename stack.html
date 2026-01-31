@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO -->
+    <title>The AI Agent Stack — Tools We Recommend | Agent Index</title>
+    <meta name="description" content="The complete stack for building AI agents with x402 payments. Curated tools for hosting, databases, email, payments, and more — used by the Agent Index team.">
+    <meta name="keywords" content="AI agent tools, x402 development, agent infrastructure, AI hosting, developer tools, agent stack, API tools">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://theagentindex.app/stack.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://theagentindex.app/stack.html">
+    <meta property="og:title" content="The AI Agent Stack — Tools We Recommend">
+    <meta property="og:description" content="Curated tools for building AI agents with x402 payments. Infrastructure, databases, email, and more.">
+    <meta property="og:image" content="https://theagentindex.app/brand/og-image.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The AI Agent Stack — Tools We Recommend">
+    <meta name="twitter:description" content="Curated tools for building AI agents with x402 payments.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --border: #27272a;
+            --text: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --green: #22c55e;
+            --purple: #a855f7;
+            --orange: #f97316;
+        }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text); }
+        
+        .hero { padding: 80px 0 60px; text-align: center; }
+        .hero h1 { font-size: 2.75rem; font-weight: 700; margin-bottom: 16px; }
+        .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+        
+        .disclosure { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 40px auto; max-width: 700px; font-size: 0.9rem; color: var(--text-muted); }
+        .disclosure strong { color: var(--text); }
+        
+        .section { padding: 40px 0; }
+        .section-header { margin-bottom: 24px; }
+        .section-header h2 { font-size: 1.5rem; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+        .section-icon { font-size: 1.5rem; }
+        .section-header p { color: var(--text-muted); margin-top: 8px; }
+        
+        .tools-grid { display: grid; gap: 16px; }
+        .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: flex-start; transition: border-color 0.2s; }
+        .tool-card:hover { border-color: var(--accent); }
+        .tool-info { flex: 1; }
+        .tool-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .tool-logo { width: 40px; height: 40px; border-radius: 8px; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        .tool-name { font-size: 1.1rem; font-weight: 600; }
+        .tool-badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: 500; margin-left: 8px; }
+        .badge-used { background: var(--green); color: #000; }
+        .badge-recommended { background: var(--purple); color: #fff; }
+        .tool-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px; max-width: 500px; }
+        .tool-features { display: flex; flex-wrap: wrap; gap: 8px; }
+        .feature-tag { font-size: 0.8rem; padding: 4px 10px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 4px; color: var(--accent); }
+        .tool-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; min-width: 140px; }
+        .tool-price { font-size: 0.85rem; color: var(--text-muted); }
+        .tool-price strong { color: var(--green); }
+        .cta-button { padding: 10px 20px; background: var(--accent); color: white; text-decoration: none; border-radius: 6px; font-size: 0.9rem; font-weight: 500; transition: background 0.2s; }
+        .cta-button:hover { background: var(--accent-hover); }
+        
+        footer { padding: 60px 0 40px; border-top: 1px solid var(--border); margin-top: 60px; }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--text); }
+        .footer-copy { color: var(--text-muted); font-size: 0.85rem; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .tool-card { flex-direction: column; gap: 16px; }
+            .tool-cta { align-items: flex-start; width: 100%; }
+            .footer-content { flex-direction: column; gap: 16px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">🔍</div>
+                Agent Index
+            </a>
+            <nav class="nav-links">
+                <a href="/categories.html">Categories</a>
+                <a href="/docs.html">API Docs</a>
+                <a href="/stack.html" style="color: var(--text);">Stack</a>
+                <a href="/pricing.html">Pricing</a>
+                <a href="/submit.html">List Your Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>The AI Agent Stack</h1>
+                <p>The tools we use and recommend for building x402 payment-enabled AI agents. Battle-tested infrastructure for the agent economy.</p>
+            </div>
+        </section>
+        
+        <div class="container">
+            <div class="disclosure">
+                <strong>Affiliate Disclosure:</strong> Some links on this page are affiliate links. If you sign up through them, we may earn a commission at no extra cost to you. We only recommend tools we actually use or would use ourselves.
+            </div>
+        </div>
+        
+        <!-- Infrastructure & Hosting -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span class="section-icon">🏗️</span> Infrastructure & Hosting</h2>
+                    <p>Where your agents live and scale</p>
+                </div>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-info">
+                            <div class="tool-header">
+                                <div class="tool-logo">🌊</div>
+                                <span class="tool-name">DigitalOcean</span>
+                                <span class="tool-badge badge-used">We Use This</span>
+                            </div>
+                            <p class="tool-desc">Simple, affordable cloud infrastructure. Perfect for deploying agent backends, APIs, and databases. We run our discovery service on DO.</p>
+                            <div class="tool-features">
+                                <span class="feature-tag">$200 Free Credit</span>
+                                <span class="feature-tag">Simple Pricing</span>
+                                <span class="feature-tag">Fast Spin-up</span>
+                            </div>
+                        </div>
+                        <div class="tool-cta">
+                            <span class="tool-price">From <strong>$4/mo</strong></span>
+                            <a href="https://www.digitalocean.com/?refcode=PLACEHOLDER&utm_source=agentindex&utm_medium=affiliate&utm_campaign=stack" class="cta-button" target="_blank" rel="noopener sponsored">Get $200 Credit →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-info">
+                            <div class="tool-header">
+                                <div class="tool-logo">▲</div>
+                                <span class="tool-name">Vercel</span>
+                                <span class="tool-badge badge-recommended">Recommended</span>
+                            </div>
+                            <p class="tool-desc">Best-in-class frontend hosting with edge functions. Ideal for agent dashboards, landing pages, and serverless API routes.</p>
+                            <div class="tool-features">
+                                <span class="feature-tag">Edge Functions</span>
+                                <span class="feature-tag">Auto-scaling</span>
+                                <span class="feature-tag">Preview Deploys</span>
+                            </div>
+                        </div>
+                        <div class="tool-cta">
+                            <span class="tool-price">Free tier available</span>
+                            <a href="https://vercel.com/?utm_source=agentindex&utm_medium=affiliate&utm_campaign=stack" class="cta-button" target="_blank" rel="noopener">Try Vercel →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-info">
+                            <div class="tool-header">
+                                <div class="tool-logo">🚂</div>
+                                <span class="tool-name">Railway</span>
+                                <span class="tool-badge badge-recommended">Recommended</span>
+                            </div>
+                            <p class="tool-desc">Deploy anything with zero config. Great for background workers, scheduled jobs, and agent orchestration services.</p>
+                            <div class="tool-features">
+                                <span class="feature-tag">One-click Deploy</span>
+                                <span class="feature-tag">Built-in Postgres</span>
+                                <span class="feature-tag">Cron Jobs</span>
+                            </div>
+                        </div>
+                        <div class="tool-cta">
+                            <span class="tool-price">From <strong>$5/mo</strong></span>
+                            <a href="https://railway.app/?utm_source=agentindex&utm_medium=affiliate&utm_campaign=stack" class="cta-button" target="_blank" rel="noopener">Try Railway →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Databases -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span class="section-icon">💾</span> Databases & Backend</h2>
+                    <p>Store agent state, logs, and user data</p>
+                </div>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-info">
+                            <div class="tool-header">
+                                <div class="tool-logo">⚡</div>
+                                <span class="tool-name">Supabase</span>
+                                <span class="tool-badge badge-used">We Use This</span>
+                            </div>
+                            <p class="tool-desc">Open-source Firebase alternative with Postgres, Auth, Storage, and Realtime. Our database of choice for AgentForge.</p>
+                            <div class="tool-features">
+                                <span class="feature-tag">Postgres + Auth</span>
+                                <span class="feature-tag">Real-time</span>
+                                <span class="feature-tag">Edge Functions</span>
+                            </div>
+                        </div>
+                        <div class="tool-cta">
+                            <span class="tool-price">Generous free tier</span>
+                            <a href="https://supabase.com/?utm_source=agentindex&utm_medium=affiliate&utm_campaign=stack" class="cta-button" target="_blank" rel="noopener">Try Supabase →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Crypto & Payments -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span class="section-icon">💰</span> Crypto & Payments</h2>
+                    <p>Enable x402 payments and crypto infrastructure</p>
+                </div>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-info">
+                            <div class="tool-header">
+                                <div class="tool-logo">🪙</div>
+                                <span class="tool-name">Coinbase Developer Platform</span>
+                                <span class="tool-badge badge-used">We Use This</span>
+                            </div>
+                            <p class="tool-desc">The official SDK for x402 payments. AgentWallets, USDC transfers, and the entire x402 protocol stack. Essential for agent commerce.</p>
+                            <div class="tool-features">
+                                <span class="feature-tag">x402 Protocol</span>
+                                <span class="feature-tag">AgentWallets</span>
+                                <span class="feature-tag">USDC on Base</span>
+                            </div>
+                        </div>
+                        <div class="tool-cta">
+                            <span class="tool-price">Free to start</span>
+                            <a href="https://www.coinbase.com/developer-platform?utm_source=agentindex&utm_medium=affiliate&utm_campaign=stack" class="cta-button" target="_blank" rel="noopener">Get Started →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Email & Communication -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span class="section-icon">📧</span> Email & Communication</h2>
+                    <p>Keep users informed and engaged</p>
+                </div>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-info">
+                            <div class="tool-header">
+                                <div class="tool-logo">📬</div>
+                                <span class="tool-name">Kit (ConvertKit)</span>
+                                <span class="tool-badge badge-recommended">Recommended</span>
+                            </div>
+                            <p class="tool-desc">Email marketing built for creators. Powerful automations, great deliverability, and a generous free tier. Perfect for agent update newsletters.</p>
+                            <div class="tool-features">
+                                <span class="feature-tag">Free to 10K subs</span>
+                                <span class="feature-tag">Automations</span>
+                                <span class="feature-tag">Creator-focused</span>
+                            </div>
+                        </div>
+                        <div class="tool-cta">
+                            <span class="tool-price">Free to 10K subscribers</span>
+                            <a href="https://kit.com/?utm_source=agentindex&utm_medium=affiliate&utm_campaign=stack" class="cta-button" target="_blank" rel="noopener">Try Kit →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-info">
+                            <div class="tool-header">
+                                <div class="tool-logo">🐝</div>
+                                <span class="tool-name">beehiiv</span>
+                                <span class="tool-badge badge-recommended">Recommended</span>
+                            </div>
+                            <p class="tool-desc">Newsletter platform built for growth. Referral programs, recommendations network, and monetization built-in. Great for building an agent-focused audience.</p>
+                            <div class="tool-features">
+                                <span class="feature-tag">Referral Program</span>
+                                <span class="feature-tag">Recommendations</span>
+                                <span class="feature-tag">Built-in Ads</span>
+                            </div>
+                        </div>
+                        <div class="tool-cta">
+                            <span class="tool-price">Free tier available</span>
+                            <a href="https://www.beehiiv.com/?utm_source=agentindex&utm_medium=affiliate&utm_campaign=stack" class="cta-button" target="_blank" rel="noopener">Try beehiiv →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- AI & LLMs -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span class="section-icon">🧠</span> AI & LLM Infrastructure</h2>
+                    <p>Power your agents with intelligence</p>
+                </div>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-info">
+                            <div class="tool-header">
+                                <div class="tool-logo">🤖</div>
+                                <span class="tool-name">Anthropic (Claude)</span>
+                                <span class="tool-badge badge-used">We Use This</span>
+                            </div>
+                            <p class="tool-desc">Claude is our AI backbone. Reliable, capable, and great at following complex instructions. Powers the intelligence behind Agent Index operations.</p>
+                            <div class="tool-features">
+                                <span class="feature-tag">200K Context</span>
+                                <span class="feature-tag">Tool Use</span>
+                                <span class="feature-tag">Reliable</span>
+                            </div>
+                        </div>
+                        <div class="tool-cta">
+                            <span class="tool-price">Pay per token</span>
+                            <a href="https://www.anthropic.com/?utm_source=agentindex&utm_medium=affiliate&utm_campaign=stack" class="cta-button" target="_blank" rel="noopener">Get API Access →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-info">
+                            <div class="tool-header">
+                                <div class="tool-logo">🔮</div>
+                                <span class="tool-name">OpenAI</span>
+                                <span class="tool-badge badge-recommended">Recommended</span>
+                            </div>
+                            <p class="tool-desc">GPT-4 and beyond. Great for specific use cases, embeddings, and when you need variety in your AI stack.</p>
+                            <div class="tool-features">
+                                <span class="feature-tag">GPT-4o</span>
+                                <span class="feature-tag">Embeddings</span>
+                                <span class="feature-tag">DALL-E</span>
+                            </div>
+                        </div>
+                        <div class="tool-cta">
+                            <span class="tool-price">Pay per token</span>
+                            <a href="https://platform.openai.com/?utm_source=agentindex&utm_medium=affiliate&utm_campaign=stack" class="cta-button" target="_blank" rel="noopener">Get API Access →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="section" style="text-align: center; padding: 80px 0;">
+            <div class="container">
+                <h2 style="font-size: 2rem; margin-bottom: 16px;">Ready to Build?</h2>
+                <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto;">Start building your x402 agent today. List it on Agent Index and join the agent economy.</p>
+                <a href="/submit.html" class="cta-button" style="padding: 14px 28px; font-size: 1rem;">List Your Agent →</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/docs.html">API Docs</a>
+                <a href="/pricing.html">Pricing</a>
+                <a href="/submit.html">Submit</a>
+                <a href="https://twitter.com/theagentindex" target="_blank">Twitter</a>
+            </div>
+            <p class="footer-copy">© 2026 Agent Index. The discovery layer for x402 agent commerce.</p>
+        </div>
+    </footer>
+</body>
+</html>
