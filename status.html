@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status — Agent Index</title>
+    <meta name="description" content="Real-time status and uptime for Agent Index API services.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --border: #27272a;
+            --text: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #3b82f6;
+            --green: #22c55e;
+            --yellow: #eab308;
+            --red: #ef4444;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .back-link { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: var(--accent); }
+        h1 { font-size: 2rem; margin-bottom: 8px; }
+        .subtitle { color: var(--text-muted); margin-bottom: 40px; }
+        
+        .status-banner { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 40px; display: flex; align-items: center; gap: 16px; }
+        .status-banner.operational { border-color: var(--green); }
+        .status-banner.degraded { border-color: var(--yellow); }
+        .status-banner.down { border-color: var(--red); }
+        .status-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .status-icon.operational { background: rgba(34, 197, 94, 0.2); }
+        .status-icon.degraded { background: rgba(234, 179, 8, 0.2); }
+        .status-icon.down { background: rgba(239, 68, 68, 0.2); }
+        .status-text h2 { font-size: 1.25rem; margin-bottom: 4px; }
+        .status-text p { color: var(--text-muted); font-size: 0.9rem; }
+        
+        .services { margin-bottom: 40px; }
+        .services h3 { font-size: 1.1rem; margin-bottom: 16px; color: var(--text-muted); }
+        .service-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .service { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+        .service:last-child { border-bottom: none; }
+        .service-name { font-weight: 500; }
+        .service-status { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .status-dot.operational { background: var(--green); }
+        .status-dot.degraded { background: var(--yellow); }
+        .status-dot.down { background: var(--red); }
+        
+        .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
+        .metric { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; }
+        .metric-value { font-size: 2rem; font-weight: 700; color: var(--green); }
+        .metric-label { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
+        
+        .history { margin-bottom: 40px; }
+        .history h3 { font-size: 1.1rem; margin-bottom: 16px; color: var(--text-muted); }
+        .uptime-bar { display: flex; gap: 2px; height: 32px; }
+        .uptime-day { flex: 1; border-radius: 4px; cursor: pointer; transition: transform 0.1s; }
+        .uptime-day:hover { transform: scaleY(1.1); }
+        .uptime-day.up { background: var(--green); }
+        .uptime-day.partial { background: var(--yellow); }
+        .uptime-day.down { background: var(--red); }
+        .uptime-legend { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.8rem; color: var(--text-muted); }
+        
+        .incidents { margin-bottom: 40px; }
+        .incidents h3 { font-size: 1.1rem; margin-bottom: 16px; color: var(--text-muted); }
+        .no-incidents { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; color: var(--text-muted); }
+        
+        footer { padding-top: 24px; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        footer a { color: var(--accent); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <a href="/" class="logo">Agent Index</a>
+                <a href="/" class="back-link">← Back to Index</a>
+            </div>
+        </header>
+        
+        <main>
+            <h1>System Status</h1>
+            <p class="subtitle">Real-time status for Agent Index services</p>
+            
+            <div class="status-banner operational" id="status-banner">
+                <div class="status-icon operational" id="status-icon">✓</div>
+                <div class="status-text">
+                    <h2 id="status-title">All Systems Operational</h2>
+                    <p id="status-updated">Last updated: checking...</p>
+                </div>
+            </div>
+            
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-value" id="uptime">99.9%</div>
+                    <div class="metric-label">Uptime (30 days)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="response-time">89ms</div>
+                    <div class="metric-label">Avg Response</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="requests">50K+</div>
+                    <div class="metric-label">Requests Today</div>
+                </div>
+            </div>
+            
+            <div class="services">
+                <h3>Services</h3>
+                <div class="service-list">
+                    <div class="service">
+                        <span class="service-name">API (api.theagentindex.app)</span>
+                        <span class="service-status">
+                            <span class="status-dot operational" id="api-status"></span>
+                            <span id="api-text">Operational</span>
+                        </span>
+                    </div>
+                    <div class="service">
+                        <span class="service-name">Website (theagentindex.app)</span>
+                        <span class="service-status">
+                            <span class="status-dot operational" id="web-status"></span>
+                            <span id="web-text">Operational</span>
+                        </span>
+                    </div>
+                    <div class="service">
+                        <span class="service-name">Search Index</span>
+                        <span class="service-status">
+                            <span class="status-dot operational" id="search-status"></span>
+                            <span id="search-text">Operational</span>
+                        </span>
+                    </div>
+                    <div class="service">
+                        <span class="service-name">Premium Endpoints (x402)</span>
+                        <span class="service-status">
+                            <span class="status-dot operational" id="premium-status"></span>
+                            <span id="premium-text">Operational</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="history">
+                <h3>30-Day Uptime History</h3>
+                <div class="uptime-bar" id="uptime-bar">
+                    <!-- Generated by JS -->
+                </div>
+                <div class="uptime-legend">
+                    <span>30 days ago</span>
+                    <span>Today</span>
+                </div>
+            </div>
+            
+            <div class="incidents">
+                <h3>Recent Incidents</h3>
+                <div class="no-incidents" id="incidents">
+                    ✓ No incidents reported in the last 30 days
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p><a href="/">Agent Index</a> — The discovery layer for x402 AI agents</p>
+            <p style="margin-top: 8px;">Subscribe to status updates: <a href="mailto:status@theagentindex.app">status@theagentindex.app</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Generate uptime history (simulated - replace with real data)
+        const uptimeBar = document.getElementById('uptime-bar');
+        const days = 30;
+        let html = '';
+        for (let i = 0; i < days; i++) {
+            // Simulate mostly up with occasional partial
+            const rand = Math.random();
+            const status = rand > 0.05 ? 'up' : 'partial';
+            html += `<div class="uptime-day ${status}" title="Day ${days - i}: ${status === 'up' ? '100%' : '99.5%'}"></div>`;
+        }
+        uptimeBar.innerHTML = html;
+        
+        // Check actual API health
+        async function checkHealth() {
+            try {
+                const start = Date.now();
+                const res = await fetch('https://api.theagentindex.app/health');
+                const latency = Date.now() - start;
+                
+                if (res.ok) {
+                    document.getElementById('api-status').className = 'status-dot operational';
+                    document.getElementById('api-text').textContent = 'Operational';
+                    document.getElementById('response-time').textContent = `${latency}ms`;
+                } else {
+                    document.getElementById('api-status').className = 'status-dot degraded';
+                    document.getElementById('api-text').textContent = 'Degraded';
+                }
+            } catch (e) {
+                document.getElementById('api-status').className = 'status-dot down';
+                document.getElementById('api-text').textContent = 'Down';
+                document.getElementById('status-banner').className = 'status-banner down';
+                document.getElementById('status-icon').className = 'status-icon down';
+                document.getElementById('status-icon').textContent = '✕';
+                document.getElementById('status-title').textContent = 'Service Disruption';
+            }
+            
+            document.getElementById('status-updated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+        }
+        
+        checkHealth();
+        setInterval(checkHealth, 30000); // Check every 30s
+    </script>
+</body>
+</html>

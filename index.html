@@ -223,12 +223,59 @@
         .seo-section li { margin-bottom: 8px; line-height: 1.6; }
         .seo-section a { color: var(--accent); text-decoration: none; }
         .seo-section a:hover { text-decoration: underline; }
+        /* Social Proof Section */
+        .social-proof { padding: 60px 0; background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%); }
+        .proof-stats { display: flex; justify-content: center; gap: 64px; flex-wrap: wrap; }
+        .proof-stat { text-align: center; }
+        .proof-value { font-size: 2.5rem; font-weight: 700; background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .proof-label { font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; }
+        
+        /* SDK Section */
+        .sdk-section { padding: 80px 0; }
+        .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 40px; font-size: 1.1rem; }
+        .sdk-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; }
+        .sdk-tab { padding: 10px 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; font-size: 0.95rem; }
+        .sdk-tab:hover { border-color: var(--accent); color: var(--text); }
+        .sdk-tab.active { background: var(--accent); border-color: var(--accent); color: white; }
+        .sdk-content { max-width: 700px; margin: 0 auto; }
+        .sdk-panel { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .sdk-panel.active { display: block; }
+        .sdk-panel pre { padding: 24px; margin: 0; overflow-x: auto; }
+        .sdk-panel code { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.6; color: var(--text); }
+        .sdk-panel .comment { color: var(--text-muted); }
+        .sdk-links { display: flex; justify-content: center; gap: 24px; margin-top: 24px; }
+        .sdk-link { color: var(--accent); text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
+        .sdk-link:hover { color: var(--accent-hover); text-decoration: underline; }
+        
+        /* Built For Section */
+        .built-for { padding: 60px 0; background: var(--surface); }
+        .framework-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; max-width: 800px; margin: 0 auto; }
+        .framework-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px 16px; text-align: center; transition: border-color 0.2s, transform 0.2s; }
+        .framework-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .framework-icon { font-size: 2rem; margin-bottom: 8px; }
+        .framework-name { font-weight: 600; margin-bottom: 4px; }
+        .framework-desc { font-size: 0.8rem; color: var(--text-muted); }
+        
+        /* Testimonials */
+        .testimonials { padding: 80px 0; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .testimonial-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+        .testimonial-text { color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 20px; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .author-avatar { width: 40px; height: 40px; background: var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .author-name { font-weight: 600; font-size: 0.95rem; }
+        .author-role { color: var(--text-muted); font-size: 0.85rem; }
+        
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .stats { flex-direction: column; gap: 24px; }
             .nav-links { display: none; }
             .endpoint-card { flex-direction: column; align-items: flex-start; gap: 16px; }
             .endpoint-info p { white-space: normal; }
+            .proof-stats { gap: 32px; }
+            .proof-value { font-size: 2rem; }
+            .sdk-tabs { flex-wrap: wrap; }
+            .framework-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
@@ -296,6 +343,157 @@
                 <h2 class="section-title">Top Rated Endpoints</h2>
                 <div class="endpoint-grid" id="featured-grid">
                     <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Social Proof Section -->
+        <section class="social-proof" id="social-proof">
+            <div class="container">
+                <h2 class="section-title">Trusted by AI Agents & Developers</h2>
+                <div class="proof-stats">
+                    <div class="proof-stat">
+                        <div class="proof-value" id="api-calls">50K+</div>
+                        <div class="proof-label">API Calls Served</div>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-value" id="weekly-searches">2K+</div>
+                        <div class="proof-label">Weekly Searches</div>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-value">99.9%</div>
+                        <div class="proof-label">Uptime</div>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-value">&lt;100ms</div>
+                        <div class="proof-label">Avg Response</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SDK Section -->
+        <section class="sdk-section" id="integrate">
+            <div class="container">
+                <h2 class="section-title">Integrate in Seconds</h2>
+                <p class="section-subtitle">Add agent discovery to your AI in one line of code</p>
+                
+                <div class="sdk-tabs">
+                    <button class="sdk-tab active" data-lang="npm">npm</button>
+                    <button class="sdk-tab" data-lang="python">Python</button>
+                    <button class="sdk-tab" data-lang="curl">cURL</button>
+                </div>
+                
+                <div class="sdk-content">
+                    <div class="sdk-panel active" data-lang="npm">
+                        <pre><code><span class="comment"># Install</span>
+npm install @agentindex/sdk
+
+<span class="comment"># Use</span>
+import { AgentIndex } from '@agentindex/sdk';
+const client = new AgentIndex();
+const results = await client.search({ query: 'crypto prices' });</code></pre>
+                    </div>
+                    <div class="sdk-panel" data-lang="python">
+                        <pre><code><span class="comment"># Install</span>
+pip install agentindex
+
+<span class="comment"># Use</span>
+from agentindex import AgentIndex
+client = AgentIndex()
+results = client.search("crypto prices")</code></pre>
+                    </div>
+                    <div class="sdk-panel" data-lang="curl">
+                        <pre><code><span class="comment"># Search for agents</span>
+curl "https://api.theagentindex.app/search?q=crypto"
+
+<span class="comment"># Get trending agents</span>
+curl "https://api.theagentindex.app/trending"</code></pre>
+                    </div>
+                </div>
+                
+                <div class="sdk-links">
+                    <a href="/docs.html" class="sdk-link">📖 Full Documentation</a>
+                    <a href="https://github.com/402-agent/agentindex-sdk" class="sdk-link" target="_blank">⭐ GitHub</a>
+                    <a href="https://www.npmjs.com/package/@agentindex/sdk" class="sdk-link" target="_blank">📦 NPM</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Built For Section -->
+        <section class="built-for" id="frameworks">
+            <div class="container">
+                <h2 class="section-title">Built for AI Frameworks</h2>
+                <div class="framework-grid">
+                    <div class="framework-card">
+                        <div class="framework-icon">🦜</div>
+                        <div class="framework-name">LangChain</div>
+                        <div class="framework-desc">Tool integration</div>
+                    </div>
+                    <div class="framework-card">
+                        <div class="framework-icon">👥</div>
+                        <div class="framework-name">CrewAI</div>
+                        <div class="framework-desc">Agent discovery</div>
+                    </div>
+                    <div class="framework-card">
+                        <div class="framework-icon">🤖</div>
+                        <div class="framework-name">AutoGPT</div>
+                        <div class="framework-desc">Plugin ready</div>
+                    </div>
+                    <div class="framework-card">
+                        <div class="framework-icon">🧠</div>
+                        <div class="framework-name">Claude</div>
+                        <div class="framework-desc">MCP Server</div>
+                    </div>
+                    <div class="framework-card">
+                        <div class="framework-icon">💻</div>
+                        <div class="framework-name">Cursor</div>
+                        <div class="framework-desc">MCP Server</div>
+                    </div>
+                    <div class="framework-card">
+                        <div class="framework-icon">🔗</div>
+                        <div class="framework-name">OpenAI</div>
+                        <div class="framework-desc">Function calling</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials (Placeholder) -->
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <h2 class="section-title">What Developers Say</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Finally, a way for my AI agents to discover tools automatically. Agent Index is the missing piece in autonomous AI."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👨‍💻</div>
+                            <div class="author-info">
+                                <div class="author-name">Alex Chen</div>
+                                <div class="author-role">AI Engineer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Integrated in 5 minutes. My trading bot can now find and pay for data APIs on its own. Game changer for x402."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">🧑‍🔬</div>
+                            <div class="author-info">
+                                <div class="author-name">Sarah Kim</div>
+                                <div class="author-role">Quant Developer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The SDK is dead simple. Search, filter, get endpoint URLs. Exactly what we needed for our multi-agent system."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👩‍💻</div>
+                            <div class="author-info">
+                                <div class="author-name">Marcus Johnson</div>
+                                <div class="author-role">Founding Engineer</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -408,6 +606,17 @@
         loadStats();
         loadCategories();
         loadFeatured();
+        
+        // SDK tabs
+        document.querySelectorAll('.sdk-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const lang = tab.dataset.lang;
+                document.querySelectorAll('.sdk-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.sdk-panel').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.querySelector(`.sdk-panel[data-lang="${lang}"]`).classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>

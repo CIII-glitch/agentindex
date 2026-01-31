@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrewAI Integration — Agent Index</title>
+    <meta name="description" content="Integrate Agent Index with CrewAI to let your AI crews discover and use x402 services dynamically.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --border: #27272a;
+            --text: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #3b82f6;
+            --green: #22c55e;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .back-link { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: var(--accent); }
+        h1 { font-size: 2.5rem; margin-bottom: 16px; }
+        h2 { font-size: 1.5rem; margin: 48px 0 16px; color: var(--text); }
+        h3 { font-size: 1.2rem; margin: 32px 0 12px; color: var(--text); }
+        p { margin-bottom: 16px; color: var(--text-muted); }
+        .highlight { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 24px 0; }
+        .highlight p { margin: 0; color: var(--text); }
+        pre { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 16px 0; }
+        code { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+        .inline-code { background: var(--surface); padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; }
+        ul { margin: 16px 0 16px 24px; color: var(--text-muted); }
+        li { margin-bottom: 8px; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .badge { display: inline-block; padding: 4px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); margin-right: 8px; }
+        .cta { background: var(--accent); color: white; padding: 12px 24px; border-radius: 8px; display: inline-block; margin-top: 16px; font-weight: 500; }
+        .cta:hover { background: #2563eb; text-decoration: none; }
+        footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <a href="/" class="logo">Agent Index</a>
+                <a href="/docs.html" class="back-link">← Back to Docs</a>
+            </div>
+        </header>
+        
+        <main>
+            <span class="badge">Integration Guide</span>
+            <span class="badge">👥 CrewAI</span>
+            
+            <h1>CrewAI Integration</h1>
+            <p>Let your CrewAI agents discover and use x402 services dynamically. Build crews that can find their own tools.</p>
+            
+            <div class="highlight">
+                <p>⚡ <strong>What you'll build:</strong> A CrewAI crew where agents can search for and use any x402 API they need — from crypto prices to weather data to AI inference.</p>
+            </div>
+            
+            <h2>Prerequisites</h2>
+            <ul>
+                <li>Python 3.9+</li>
+                <li>CrewAI installed</li>
+                <li>OpenAI API key</li>
+            </ul>
+            
+            <h2>Installation</h2>
+            <pre><code>pip install agentindex crewai crewai-tools</code></pre>
+            
+            <h2>Quick Start</h2>
+            <p>Create a CrewAI tool that wraps Agent Index:</p>
+            
+            <pre><code>from crewai import Agent, Task, Crew
+from crewai_tools import tool
+from agentindex import AgentIndex
+
+# Create the search tool
+@tool("Search x402 Agents")
+def search_agents(query: str) -> str:
+    """
+    Search for x402 AI agents that can perform specific tasks.
+    Use this to find APIs for crypto data, weather, news, AI models, etc.
+    
+    Args:
+        query: What capability you're looking for (e.g., "crypto prices", "weather forecast")
+    
+    Returns:
+        List of matching agents with URLs and prices
+    """
+    client = AgentIndex()
+    results = client.search(query, limit=5)
+    
+    if not results.results:
+        return "No agents found matching your query."
+    
+    output = []
+    for agent in results.results:
+        output.append(
+            f"• {agent.description}\n"
+            f"  URL: {agent.url}\n"
+            f"  Price: ${agent.price_usd}/call | Health: {agent.health}"
+        )
+    
+    return "\n\n".join(output)
+
+# Create an agent that uses this tool
+researcher = Agent(
+    role="API Researcher",
+    goal="Find the best APIs for any data need",
+    backstory="You are an expert at finding and evaluating x402 APIs. "
+              "You know how to search for specific capabilities and "
+              "evaluate them based on price, reliability, and features.",
+    tools=[search_agents],
+    verbose=True
+)
+
+# Create a task
+find_crypto_api = Task(
+    description="Find the best API for getting real-time Bitcoin prices. "
+                "Consider price, reliability (health status), and features. "
+                "Recommend the top 2-3 options with reasoning.",
+    expected_output="A recommendation of the best crypto price APIs with URLs and justification",
+    agent=researcher
+)
+
+# Run the crew
+crew = Crew(
+    agents=[researcher],
+    tasks=[find_crypto_api],
+    verbose=True
+)
+
+result = crew.kickoff()
+print(result)</code></pre>
+            
+            <h2>Advanced: Multi-Agent Research Crew</h2>
+            <p>Build a crew with specialized agents for different API categories:</p>
+            
+            <pre><code>from crewai import Agent, Task, Crew, Process
+from crewai_tools import tool
+from agentindex import AgentIndex
+import httpx
+
+client = AgentIndex()
+
+@tool("Search Crypto APIs")
+def search_crypto_apis(query: str) -> str:
+    """Search for cryptocurrency-related APIs."""
+    results = client.search(query, category="crypto", limit=5)
+    return format_results(results)
+
+@tool("Search Weather APIs")
+def search_weather_apis(query: str) -> str:
+    """Search for weather and climate APIs."""
+    results = client.search(query, category="weather", limit=5)
+    return format_results(results)
+
+@tool("Search AI APIs")
+def search_ai_apis(query: str) -> str:
+    """Search for AI and ML inference APIs."""
+    results = client.search(query, category="ai/ml", limit=5)
+    return format_results(results)
+
+@tool("Call API Endpoint")
+def call_api(url: str) -> str:
+    """Call an x402 API endpoint and return the response."""
+    try:
+        response = httpx.get(url, timeout=10)
+        return response.text[:2000]
+    except Exception as e:
+        return f"Error calling API: {e}"
+
+def format_results(results):
+    if not results.results:
+        return "No APIs found."
+    return "\n".join([
+        f"• {a.description} - {a.url} (${a.price_usd}/call, {a.health})"
+        for a in results.results
+    ])
+
+# Specialized agents
+crypto_specialist = Agent(
+    role="Crypto Data Specialist",
+    goal="Find the best cryptocurrency data APIs",
+    backstory="Expert in DeFi and crypto data sources",
+    tools=[search_crypto_apis, call_api],
+    verbose=True
+)
+
+data_analyst = Agent(
+    role="Data Analyst",
+    goal="Analyze and compare API options",
+    backstory="Expert at evaluating APIs for reliability and value",
+    tools=[],
+    verbose=True
+)
+
+# Tasks
+find_apis = Task(
+    description="Find APIs that can provide real-time ETH and BTC prices",
+    expected_output="List of suitable APIs with URLs",
+    agent=crypto_specialist
+)
+
+analyze_apis = Task(
+    description="Analyze the found APIs and recommend the best one based on "
+                "price, reliability, and data quality",
+    expected_output="Final recommendation with reasoning",
+    agent=data_analyst,
+    context=[find_apis]  # Uses output from previous task
+)
+
+# Run the crew
+crew = Crew(
+    agents=[crypto_specialist, data_analyst],
+    tasks=[find_apis, analyze_apis],
+    process=Process.sequential,
+    verbose=True
+)
+
+result = crew.kickoff()
+print(result)</code></pre>
+            
+            <h2>Category-Specific Tools</h2>
+            <p>Pre-built tool functions for common categories:</p>
+            
+            <pre><code>from agentindex import AgentIndex
+
+client = AgentIndex()
+
+def make_category_tool(category: str, name: str, description: str):
+    """Factory for category-specific search tools."""
+    
+    @tool(name)
+    def category_search(query: str) -> str:
+        __doc__ = description
+        results = client.search(query, category=category, limit=5)
+        if not results.results:
+            return f"No {category} APIs found for: {query}"
+        return "\n".join([
+            f"• {a.description} ({a.url}) - ${a.price_usd}/call"
+            for a in results.results
+        ])
+    
+    return category_search
+
+# Create tools for each category
+crypto_tool = make_category_tool("crypto", "Search Crypto APIs", "Find cryptocurrency APIs")
+defi_tool = make_category_tool("defi", "Search DeFi APIs", "Find DeFi analytics APIs")
+ai_tool = make_category_tool("ai/ml", "Search AI APIs", "Find AI inference APIs")
+weather_tool = make_category_tool("weather", "Search Weather APIs", "Find weather APIs")
+news_tool = make_category_tool("news", "Search News APIs", "Find news and media APIs")</code></pre>
+            
+            <h2>Best Practices</h2>
+            <ul>
+                <li><strong>Reuse the client:</strong> Create one AgentIndex instance and reuse it across tools</li>
+                <li><strong>Handle errors gracefully:</strong> Wrap API calls in try/except</li>
+                <li><strong>Filter by health:</strong> Use <code class="inline-code">health="healthy"</code> results first</li>
+                <li><strong>Consider price:</strong> Sort by <code class="inline-code">price_usd</code> for cost optimization</li>
+            </ul>
+            
+            <h2>Next Steps</h2>
+            <ul>
+                <li><a href="/docs.html">Full API Reference</a></li>
+                <li><a href="/guides/langchain.html">LangChain Integration</a></li>
+                <li><a href="https://github.com/402-agent/agentindex-python">Python SDK on GitHub</a></li>
+            </ul>
+            
+            <a href="https://pypi.org/project/agentindex/" class="cta" target="_blank">Install from PyPI →</a>
+        </main>
+        
+        <footer>
+            <p><a href="/">Agent Index</a> — The discovery layer for x402 AI agents</p>
+        </footer>
+    </div>
+</body>
+</html>

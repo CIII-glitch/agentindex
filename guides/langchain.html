@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Integration — Agent Index</title>
+    <meta name="description" content="Integrate Agent Index with LangChain to give your AI agents the ability to discover and pay for x402 APIs automatically.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --border: #27272a;
+            --text: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #3b82f6;
+            --green: #22c55e;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+        header { padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; }
+        .back-link { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: var(--accent); }
+        h1 { font-size: 2.5rem; margin-bottom: 16px; }
+        h2 { font-size: 1.5rem; margin: 48px 0 16px; color: var(--text); }
+        h3 { font-size: 1.2rem; margin: 32px 0 12px; color: var(--text); }
+        p { margin-bottom: 16px; color: var(--text-muted); }
+        .highlight { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 24px 0; }
+        .highlight p { margin: 0; color: var(--text); }
+        pre { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 16px 0; }
+        code { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+        .inline-code { background: var(--surface); padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; }
+        ul { margin: 16px 0 16px 24px; color: var(--text-muted); }
+        li { margin-bottom: 8px; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .badge { display: inline-block; padding: 4px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); margin-right: 8px; }
+        .cta { background: var(--accent); color: white; padding: 12px 24px; border-radius: 8px; display: inline-block; margin-top: 16px; font-weight: 500; }
+        .cta:hover { background: #2563eb; text-decoration: none; }
+        footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <a href="/" class="logo">Agent Index</a>
+                <a href="/docs.html" class="back-link">← Back to Docs</a>
+            </div>
+        </header>
+        
+        <main>
+            <span class="badge">Integration Guide</span>
+            <span class="badge">🦜 LangChain</span>
+            
+            <h1>LangChain Integration</h1>
+            <p>Give your LangChain agents the ability to discover and use x402 APIs automatically. Find any tool your AI needs in real-time.</p>
+            
+            <div class="highlight">
+                <p>⚡ <strong>What you'll build:</strong> A LangChain agent that can search for crypto price APIs, weather data, news feeds, and any other x402-enabled service — then use them autonomously.</p>
+            </div>
+            
+            <h2>Prerequisites</h2>
+            <ul>
+                <li>Python 3.9+</li>
+                <li>LangChain 0.1.0+ installed</li>
+                <li>OpenAI API key (or any LLM provider)</li>
+            </ul>
+            
+            <h2>Installation</h2>
+            <pre><code>pip install agentindex langchain langchain-openai</code></pre>
+            
+            <h2>Quick Start</h2>
+            <p>Create a LangChain tool that searches Agent Index:</p>
+            
+            <pre><code>from agentindex import create_langchain_tool
+from langchain_openai import ChatOpenAI
+from langchain.agents import AgentExecutor, create_openai_functions_agent
+from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+
+# Create the Agent Index tool
+agent_index_tool = create_langchain_tool()
+
+# Create your agent
+llm = ChatOpenAI(model="gpt-4", temperature=0)
+tools = [agent_index_tool]
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful AI that can find and use x402 APIs. "
+               "When you need external data, search Agent Index to find suitable APIs."),
+    ("human", "{input}"),
+    MessagesPlaceholder(variable_name="agent_scratchpad"),
+])
+
+agent = create_openai_functions_agent(llm, tools, prompt)
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+# Run it
+result = agent_executor.invoke({
+    "input": "I need to get real-time Bitcoin prices. Find me an API."
+})
+print(result)</code></pre>
+            
+            <h2>How It Works</h2>
+            <p>The Agent Index tool provides a single function <code class="inline-code">agent_index_search</code> that your LangChain agent can call:</p>
+            
+            <pre><code># Tool signature
+agent_index_search(
+    query: str,        # What capability are you looking for?
+    category: str,     # Optional: crypto, defi, ai, weather, news, oracle
+    max_price: float   # Optional: Maximum price per call in USD
+) -> str              # Returns top 5 matching agents as formatted text</code></pre>
+            
+            <h3>Example Tool Output</h3>
+            <pre><code>- Get real-time crypto prices (https://api.example.com/price) - $0.01/call, Health: healthy
+- Historical price data (https://oracle.example.com/history) - $0.02/call, Health: healthy
+- Multi-chain token prices (https://defi.example.com/tokens) - $0.005/call, Health: healthy</code></pre>
+            
+            <h2>Advanced: Custom Client</h2>
+            <p>Pass a custom client with different settings:</p>
+            
+            <pre><code>from agentindex import AgentIndex, create_langchain_tool
+
+# Custom client with longer timeout
+custom_client = AgentIndex(timeout=30.0)
+
+# Create tool with custom client
+tool = create_langchain_tool(client=custom_client)</code></pre>
+            
+            <h2>Example Use Cases</h2>
+            <ul>
+                <li><strong>Trading Bots:</strong> Find crypto price and market data APIs on demand</li>
+                <li><strong>Research Agents:</strong> Discover news and data sources dynamically</li>
+                <li><strong>Multi-Agent Systems:</strong> Let agents find and coordinate with other agents</li>
+                <li><strong>Automation:</strong> Build systems that adapt to new APIs as they appear</li>
+            </ul>
+            
+            <h2>Full Example: Autonomous Data Fetcher</h2>
+            <pre><code>from agentindex import AgentIndex, create_langchain_tool
+from langchain_openai import ChatOpenAI
+from langchain.agents import AgentExecutor, create_openai_functions_agent
+from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.tools import tool
+import httpx
+
+# Agent Index tool
+agent_index_tool = create_langchain_tool()
+
+# Tool to actually call the found APIs
+@tool
+def call_api(url: str) -> str:
+    """Call an x402 API endpoint and return the result."""
+    try:
+        response = httpx.get(url, timeout=10)
+        return response.text[:1000]  # First 1000 chars
+    except Exception as e:
+        return f"Error: {e}"
+
+# Build agent with both tools
+llm = ChatOpenAI(model="gpt-4", temperature=0)
+tools = [agent_index_tool, call_api]
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", """You are a data-fetching AI. When asked for data:
+1. Use agent_index_search to find a suitable API
+2. Use call_api to fetch data from the best result
+3. Parse and return the relevant information"""),
+    ("human", "{input}"),
+    MessagesPlaceholder(variable_name="agent_scratchpad"),
+])
+
+agent = create_openai_functions_agent(llm, tools, prompt)
+executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+# Now it can find AND use APIs autonomously
+result = executor.invoke({
+    "input": "What's the current ETH price? Find an API and get the data."
+})
+print(result["output"])</code></pre>
+            
+            <h2>Next Steps</h2>
+            <ul>
+                <li><a href="/docs.html">Full API Reference</a></li>
+                <li><a href="/guides/crewai.html">CrewAI Integration</a></li>
+                <li><a href="https://github.com/402-agent/agentindex-python">Python SDK on GitHub</a></li>
+            </ul>
+            
+            <a href="https://pypi.org/project/agentindex/" class="cta" target="_blank">Install from PyPI →</a>
+        </main>
+        
+        <footer>
+            <p><a href="/">Agent Index</a> — The discovery layer for x402 AI agents</p>
+        </footer>
+    </div>
+</body>
+</html>
